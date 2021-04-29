@@ -129,26 +129,240 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post article" href="/2021/04/29/hello-world/"><article class="excerpt md">
+  <div class="post-list post"><a class="post-card post article" href="/2021/04/29/2021-02-07-Pwn-emarm/"><article class="excerpt md">
 
 <h2 class="post-title">
-  Hello World
+  2021-04-29
 </h2>
 <div class='excerpt'>
   
-    <p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...</p>
+    <p>GOT表与PLT表PLT表存储出现过的GOT表地址，GOT表指向全局函数所在的地址。
+所以如果在运行时将GOT表中的某个函数改为目标函数并运行就可以达到访问shell的目的。
+one_gadget搜索某个版本的libc中的所有调用系统的函数，并返回成功条件。
+HWS计划 emarm WP读流程，发现第一步是字符串匹配，但是有长度参数，所以直接传入’\0’截断。
+没有机会溢出。没有格式化输出。...</p>
   
 </div>
 <div class='meta cap'>
   <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-04-29T08:35:59.288Z'>2021-04-29</time>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.114Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-1-14-pwn-AD%20guess_num/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>靶场random WP怎么突然想起来写这个题了呢，因为人肉计算机。
+没错，random那个题我也是人肉跑出来的。虽然我试过修改种子再生成随机数，但似乎效果并不好。于是鉴于每个数都在1~6之间，就用人工的方案了。方案跟那个comb题差不多，本地跑出来数据之后再用pwntool上传就可以了。
+AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一遍。
+确定偏...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.112Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-1-10-Re%20Bbbbbabyre/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>摸鱼文重写了。
+一、无法反汇编怎么办本题的主函数在不经过处理的情况下没有办法反汇编，解决途径有二：
+1. 将函数体选中，直接转化为函数
+
+2. 在函数体最后sp堆栈不平衡的位置把多余的代码行去掉
+
+这种情况基本是函数内部的函数调用有问题, 某个函数的函数声明有问题. 此时选项-&gt;general-&gt;disassembly-&gt;Display disassembly line p...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.110Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-24-RE-BABERE/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>AD babyre WP这个题，是对函数体本身进行了加密。由于这里的加密比较简单，直接利用idapython在源数据上打patch（或者）复现对函数体的解密，然后分析主体函数就好了。
+附idapython文档
+附
+Enter text in Markdown. Use the toolbar above, or click the ? button for formatting help.
+</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.105Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-23-RE-easymaze/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>动态调试看地图！！！！一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。
+Enter text in Markdown. Use the toolbar above, or click the ? button for formatting help.
+</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.102Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-23-RE-easyhook/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）
+遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。
+另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣
+12key &#x3D; (char *)crypto - ...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.100Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-18-web-%E4%B8%80%E4%B8%AA%E5%AE%9E%E6%88%98/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>burpsuite 代理配置
+在internet中打开internet选项卡，调整LAN代理。
+
+安装burp的证书
+
+
+代理抓包打开代理的拦截抓包选项，在http代理选项中可以通过默认浏览器打开。
+重发器是个好东西Enter text in Markdown. Use the toolbar above, or click the ? button for formatting help.
+</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.098Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-17-Pwn-cg%20pwn2/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>cgpwn2 WP这题本身没啥好说的，主要是不要被大大的pwn迷惑了，实际使用的是_system函数另外，暂时未知替换return后为什么要先填充一个空字再填入commend参数地址，需要继续去读函数在栈上的具体模式，懂了再回来更。
+半懂了，这个地方的空字是函数的返回值，但具体在栈上的实现下周再更吧。
+另外，做这个题途中配置了vim的pwn相关代码复用，也算是有点收获。Enter text ...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.095Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-17-Pwn%20string/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>AD string WP这个题戏好多啊
+总而言之，终于摸到了格式化字符串漏洞的大门！
+具体步骤
+checksec发现地址是动态的，die查壳发现是64位
+
+运行一下全是字，然后发现诶，有secret,看来是好东西（当时应该想到是地址的）。
+
+打开发现居然有secret地址输出诶！（当时应该想到是格式化字符串的）
+
+
+4.然后读流程，基本上就是文字游戏，注意两点：
+
+
+游戏中间有个printf...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.094Z'>2021-04-29</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/04/29/2021-01-15-Pwn-int_overflow/"><article class="excerpt md">
+
+<h2 class="post-title">
+  2021-04-29
+</h2>
+<div class='excerpt'>
+  
+    <p>“万物皆可溢出”1.通过某个变量溢出获取值来控制流程
+2.通过程序段溢出修改流程
+具体流程1.查函数列表看到后门函数地址
+2.注意到这里的字符串函数只有strcpy，而调用的触发条件是用字符串长度赋值的int8变量大于3小于8
+3.注意字越短越容易溢出，遂用长度溢出覆盖
+Enter text in Markdown. Use the toolbar above, or click the ?...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-04-29T12:10:48.092Z'>2021-04-29</time>
   </span>
   
   
 </div>
 </article></a></div>
   
+  <div class='paginator-wrap dis-select'>
+    <a class='paginator prev disable' href='/'>
+      <img src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/arrow/f049bbd4e88ec.svg'/>
+    </a>
+    <div class='paginator current'>
+      1<span class='sep'></span>2
+    </div>
+    <a class='paginator next' href='/page/2/'>
+      <img src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/arrow/064b95430caf4.svg'/>
+    </a>
+  </div>
+
 
 
 

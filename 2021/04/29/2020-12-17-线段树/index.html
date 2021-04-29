@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang='cn'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>post - 王某杂谈</title>
+
+  
+    <meta name="description" content="新人蒟蒻前来水一次博客emmmmm线段树真是个耗头发的好东西。话不多说上代码【语文差的555】     头文件及定义等12345678910111213141516171819&#x2F;&#x2F;其实用不到这么多#include&lt;iostream&gt;#include&lt;cstdio&gt;#include&lt;cmath&gt;#include&lt;cstring&gt;#include&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="王某杂谈">
+<meta property="og:url" content="http://example.com/2021/04/29/2020-12-17-%E7%BA%BF%E6%AE%B5%E6%A0%91/index.html">
+<meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="新人蒟蒻前来水一次博客emmmmm线段树真是个耗头发的好东西。话不多说上代码【语文差的555】     头文件及定义等12345678910111213141516171819&#x2F;&#x2F;其实用不到这么多#include&lt;iostream&gt;#include&lt;cstdio&gt;#include&lt;cmath&gt;#include&lt;cstring&gt;#include&lt;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-04-29T12:10:48.076Z">
+<meta property="article:modified_time" content="2020-12-18T03:17:08.325Z">
+<meta property="article:author" content="Zuni">
+<meta property="article:tag" content="re">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E4%BA%BA%E8%92%9F%E8%92%BB%E5%89%8D%E6%9D%A5%E6%B0%B4%E4%B8%80%E6%AC%A1%E5%8D%9A%E5%AE%A2"><span class="toc-text">新人蒟蒻前来水一次博客</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E5%8F%8A%E5%AE%9A%E4%B9%89%E7%AD%89"><span class="toc-text">头文件及定义等</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%82%B9%E6%8F%92%E5%85%A5%E3%80%90%E5%8F%AF%E4%BB%A5%E5%BD%93%E5%81%9A%E5%BB%BA%E6%A0%91%E4%BD%BF%E7%94%A8%E3%80%91%EF%BC%88insert-single%EF%BC%89"><span class="toc-text">单点插入【可以当做建树使用】（insert_single）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E6%8F%92%E5%85%A5%EF%BC%88insert-interval%EF%BC%89"><span class="toc-text">区间插入（insert_interval）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9A%84%E7%B2%BE%E9%AB%93%E6%93%8D%E4%BD%9C%E6%9D%A5%E4%BA%86%EF%BC%81"><span class="toc-text">线段树的精髓操作来了！</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2%EF%BC%88query-interval%EF%BC%89"><span class="toc-text">区间查询（query_interval）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E7%A8%8B%E5%BA%8F"><span class="toc-text">主程序</span></a></li></ol></li></ol></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-04-29T12:10:48.076Z'>2021-04-29</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+
+<h2 id="新人蒟蒻前来水一次博客"><a href="#新人蒟蒻前来水一次博客" class="headerlink" title="新人蒟蒻前来水一次博客"></a>新人蒟蒻前来水一次博客</h2><p>emmmmm线段树真是个<del>耗头发的</del>好东西。<br>话不多说上代码【语文差的555】    </p>
+<h4 id="头文件及定义等"><a href="#头文件及定义等" class="headerlink" title="头文件及定义等"></a>头文件及定义等</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//其实用不到这么多</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100010</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll  long long </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ill inline long long</span></span><br><span class="line">ll n,m,a,b,c,f;<span class="comment">//不解释</span></span><br><span class="line">ll tr[N&lt;&lt;<span class="number">1</span>],<span class="comment">//本体</span></span><br><span class="line">R[N&lt;&lt;<span class="number">1</span>],L[N&lt;&lt;<span class="number">1</span>],<span class="comment">//左右子树</span></span><br><span class="line">Lazy[N&lt;&lt;<span class="number">1</span>],<span class="comment">//懒标</span></span><br><span class="line">cnt,root,now;<span class="comment">//节点个数，根节点，当前节点</span></span><br><span class="line"><span class="comment">//线段树动态开点一般二倍即可【听说静态开点要四倍】</span></span><br><span class="line">ll tp;<span class="comment">//存储某些临时变量以备不时之需</span></span><br></pre></td></tr></table></figure>
+<h4 id="单点插入【可以当做建树使用】（insert-single）"><a href="#单点插入【可以当做建树使用】（insert-single）" class="headerlink" title="单点插入【可以当做建树使用】（insert_single）"></a>单点插入【可以当做建树使用】（insert_single）</h4><pre><code>    从上到下每一个包含修改值的区间均需要修改。
+</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ill <span class="title">insert_sgl</span><span class="params">(ll &amp;now,ll l,ll r,ll nu,ll po)</span></span></span><br><span class="line"><span class="function"><span class="comment">//num(插入值),position(插入位置)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!now)now=++cnt;</span><br><span class="line">    tr[now]+=nu;<span class="keyword">if</span>(!(r-l))<span class="keyword">return</span> nu;</span><br><span class="line">    ll mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(po&lt;=mid)<span class="keyword">return</span> <span class="built_in">insert_sgl</span>(L[now],l,mid,nu,po);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">insert_sgl</span>(R[now],mid+<span class="number">1</span>,r,nu,po);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="区间插入（insert-interval）"><a href="#区间插入（insert-interval）" class="headerlink" title="区间插入（insert_interval）"></a>区间插入（insert_interval）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ill <span class="title">insert_ivl</span><span class="params">(ll &amp;now,ll l,ll r,ll nu,ll pl,ll pr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(now==<span class="number">0</span>)now=++cnt;</span><br><span class="line">    <span class="keyword">if</span>(pl&lt;=l&amp;&amp;pr&gt;=r)<span class="comment">//当前区间完全属于查询区间时</span></span><br><span class="line">	&#123;tr[now]+=nu*(r-l+<span class="number">1</span>);<span class="comment">//区间长度=右端点-左端的+1；</span></span><br><span class="line">	Lazy[now]+=nu;<span class="comment">//打上lazytag</span></span><br><span class="line">    <span class="keyword">return</span> nu;&#125;</span><br><span class="line">	<span class="built_in">pushdown</span>(now,l,r);<span class="comment">//顺手下推</span></span><br><span class="line">    ll mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(pl&lt;=mid)  <span class="built_in">insert_ivl</span>(L[now],l,mid,nu,pl,pr);</span><br><span class="line">    <span class="keyword">if</span>(pr&gt;mid) <span class="built_in">insert_ivl</span>(R[now],mid+<span class="number">1</span>,r,nu,pl,pr);</span><br><span class="line">    <span class="built_in">pushup</span>(now);</span><br><span class="line">	<span class="keyword">return</span> nu;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树的精髓操作来了！"><a href="#线段树的精髓操作来了！" class="headerlink" title="线段树的精髓操作来了！"></a>线段树的精髓操作来了！</h2><p>先介绍下懒人标记：<br>所谓懒人标记其实是一种延迟性质的操作<del>用来显示自己与众不同</del> ，把所有的修改操作堆积起来，等到查询的时候统一完成<del>像不像开学前一晚上的你</del>，这里我们需要两个辅（zhong）助（yao）函数：下推（pushdown）,上拉（pushup）操作;    </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ill <span class="title">pushdown</span><span class="params">(ll&amp; now,ll l,ll r)</span><span class="comment">//下推</span></span></span><br><span class="line"><span class="function"><span class="comment">//把自己的lazytag下发给左右儿子，并清除标记</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(Lazy[now])</span><br><span class="line">	&#123;</span><br><span class="line">		ll mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(L[now]==<span class="number">0</span>)L[now]=++cnt;<span class="comment">//动态开点操作</span></span><br><span class="line">        Lazy[L[now]]+=Lazy[now];</span><br><span class="line">		tr[L[now]]+=Lazy[now]*(mid-l+<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//标记打在哪，区间就更新到哪</span></span><br><span class="line">		<span class="keyword">if</span>(R[now]==<span class="number">0</span>)R[now]=++cnt;</span><br><span class="line">        Lazy[R[now]]+=Lazy[now];</span><br><span class="line">		tr[R[now]]+=Lazy[now]*(r-mid);</span><br><span class="line">        <span class="comment">//有标记的区间一定是运算过的</span></span><br><span class="line">		Lazy[now]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> now;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ill <span class="title">pushup</span><span class="params">(ll &amp;now)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> tr[now]=tr[L[now]]+tr[R[now]];</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//个人觉得这个完全可以宏定义或者一行代码写在程序后，</span></span><br><span class="line"><span class="comment">//但为了不让下推单着【误】，故写在这里博君一笑。</span></span><br></pre></td></tr></table></figure>
+<p>pushdown操作发生在修改操作最前，pushup操作发生在修改操作最后。（有点类似逆操作）？</p>
+<h4 id="区间查询（query-interval）"><a href="#区间查询（query-interval）" class="headerlink" title="区间查询（query_interval）"></a>区间查询（query_interval）</h4><p>查询时记得要顺手下推。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ill <span class="title">query_ivl</span><span class="params">(ll &amp;now,ll l,ll r,ll ql,ll qr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l&gt;=ql&amp;&amp;r&lt;=qr)<span class="keyword">return</span> tr[now];</span><br><span class="line">    <span class="comment">//如果区间完全被包含在查询区间内则必然被更新过，</span></span><br><span class="line">    <span class="comment">//可直接返回</span></span><br><span class="line">    <span class="built_in">pushdown</span>(now,l,r);</span><br><span class="line">    ll mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    ll ls=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(ql&lt;=mid) ls+=<span class="built_in">query_ivl</span>(L[now],l,mid,ql,qr);</span><br><span class="line">    <span class="keyword">if</span>(qr&gt;mid) ls+=<span class="built_in">query_ivl</span>(R[now],mid+<span class="number">1</span>,r,ql,qr);</span><br><span class="line">    <span class="keyword">return</span> ls;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主程序"><a href="#主程序" class="headerlink" title="主程序"></a>主程序</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">    <span class="keyword">for</span>(ll i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;tp);</span><br><span class="line">        <span class="built_in">insert_sgl</span>(root,<span class="number">1</span>,n,tp,i);<span class="comment">//一切都要从头来</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(ll i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;f);</span><br><span class="line">        <span class="keyword">if</span>(f==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld%lld&quot;</span>,&amp;a,&amp;b,&amp;c);</span><br><span class="line">            <span class="built_in">insert_ivl</span>(root,<span class="number">1</span>,n,c,a,b);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(f==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld&quot;</span>,&amp;a,&amp;b);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,<span class="built_in">query_ivl</span>(root,<span class="number">1</span>,n,a,b));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><del>小小声说一句，现在的我已经会手撸线段树了hhhhhhhhh</del><br>Enter text in <a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/">Markdown</a>. Use the toolbar above, or click the <strong>?</strong> button for formatting help.</p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/29/2020-12-17-%E6%95%B0%E8%AE%BA%E6%9D%BF%E5%AD%90/">undefined</a></div><div class="post-title fs14"><a href="/2021/04/29/2020-12-18-pwn-random/">上一篇：undefined</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
