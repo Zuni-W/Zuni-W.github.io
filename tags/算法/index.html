@@ -4,7 +4,7 @@
 <head>
   <meta name="generator" content="Hexo 5.4.0">
   <meta charset="utf-8">
-  
+  <meta name="robots" content="noindex,follow">
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
@@ -17,18 +17,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>post - 王某杂谈</title>
+  <title>Tag: 算法 - 王某杂谈</title>
 
   
-    <meta name="description" content="靶场random WP怎么突然想起来写这个题了呢，因为人肉计算机。 没错，random那个题我也是人肉跑出来的。虽然我试过修改种子再生成随机数，但似乎效果并不好。于是鉴于每个数都在1~6之间，就用人工的方案了。方案跟那个comb题差不多，本地跑出来数据之后再用pwntool上传就可以了。 AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一遍。 确定偏移量是">
-<meta property="og:type" content="article">
+    <meta property="og:type" content="website">
 <meta property="og:title" content="王某杂谈">
-<meta property="og:url" content="http://example.com/2021/04/29/2020-12-18-pwn-random/index.html">
+<meta property="og:url" content="http://example.com/tags/%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="王某杂谈">
-<meta property="og:description" content="靶场random WP怎么突然想起来写这个题了呢，因为人肉计算机。 没错，random那个题我也是人肉跑出来的。虽然我试过修改种子再生成随机数，但似乎效果并不好。于是鉴于每个数都在1~6之间，就用人工的方案了。方案跟那个comb题差不多，本地跑出来数据之后再用pwntool上传就可以了。 AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一遍。 确定偏移量是">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-04-29T12:10:48.083Z">
-<meta property="article:modified_time" content="2021-01-23T09:34:19.014Z">
 <meta property="article:author" content="Zuni">
 <meta property="article:tag" content="re">
 <meta name="twitter:card" content="summary">
@@ -72,8 +68,24 @@
   
     
       
+      <div class='widget-wrap' id='markdown'>
+  <div class='widget-header h4 dis-select'>
+    <span class='name'>欢迎</span>
+  </div>
+  <div class='widget-body fs14'>
+    
+      <p>欢迎光临小站，<a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/">Stellar</a> 是一个支持 wiki 的 hexo 主题，适合综合型站点使用。同时也拥有简约而精美的视觉设计和丰富的标签插件，帮助您简单从容地应对各种场合。</p>
+
+    
+  </div>
+</div>
+
+    
+  
+    
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">TOC</span></div><div class="widget-body fs14 post"><div class="doc-tree active"></div></div></div>
+      
+<div class="widget-wrap" id="recent"><div class="widget-header h4 dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><div class="post-title reveal"><div class="cap"><time>2021-04-29</time></div><a href="/2020/12/17/%E6%95%B0%E8%AE%BA%E6%9D%BF%E5%AD%90/">数论板子</a></div><div class="post-title reveal"><div class="cap"><time>2021-04-29</time></div><a href="/2021/02/08/obfu/">obfu</a></div><div class="post-title reveal"><div class="cap"><time>2021-04-29</time></div><a href="/2021/04/29/hello-world/">Hello World</a></div></div></div>
 
     
   
@@ -81,50 +93,67 @@
 
 
     </aside>
-    <div class='l_main'>
+    <div class='l_main list'>
       
-
-      
-
-
-  <div class='bread-nav fs12'>
   
+<header class='header mobile-only'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+
+
+      
+
+  
+
+
+  <div class='nav-wrap mobile-hidden'>
+  <nav class='sub post cap'>
     
-    <div id='breadcrumb'>
-      <a class='cap breadcrumb' href='/'>Home</a>
-      <span class="sep"></span>
-      <a class='cap breadcrumb' href='/'>Blog</a>
+      <a href='/'>Recent</a>
+    
+    
+    
       
-    </div>
-    <div id='post-meta'>
-      Posted on&nbsp;<time datetime='2021-04-29T12:10:48.083Z'>2021-04-29</time>
-    </div>
+        <a class='active' href='/tags'>Tag: 算法</a>
+      
+    
+    
+      
+        <a href='/archives'>Archives</a>
+      
+    
+  </nav>
+</div>
+
+  <div class="post-list post"><a class="post-card post article" href="/2020/12/17/%E6%95%B0%E8%AE%BA%E6%9D%BF%E5%AD%90/"><article class="excerpt md">
+
+<h2 class="post-title">
+  数论板子
+</h2>
+<div class='excerpt'>
   
-  </div>
-
-
-<article class='content md post'>
-
-<h1 id="靶场random-WP"><a href="#靶场random-WP" class="headerlink" title="靶场random WP"></a>靶场random WP</h1><p>怎么突然想起来写这个题了呢，因为<del><strong>人肉计算机</strong></del>。</p>
-<p>没错，random那个题我也是人肉跑出来的。虽然我试过修改种子再生成随机数，但似乎效果并不好。于是鉴于每个数都在1~6之间，就用人工的方案了。方案跟那个comb题差不多，本地跑出来数据之后再用pwntool上传就可以了。</p>
-<h1 id="AD-guess-num-WP"><a href="#AD-guess-num-WP" class="headerlink" title="AD guess_num WP"></a>AD guess_num WP</h1><p>这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一遍。</p>
-<p>确定偏移量是0x20，然后构建一个随机数种子，注意两点：</p>
-<p>1.在linux下用随机数生成程序生成与Windows不同，所以要用对平台</p>
-<p>2.注意覆盖时要把整个变量全覆盖，防止有未覆盖导致的未知量</p>
-<p>3.似乎可以通过引用lib的方式直接在py脚本中写随机数，但是窝还不会</p>
-<p>4.vim 好有趣【事情奇怪了起来】</p>
-<p>Enter text in <a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/">Markdown</a>. Use the toolbar above, or click the <strong>?</strong> button for formatting help.</p>
-
-
-<div class="article-footer fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
-
-</article>
-
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/29/2020-12-17-%E7%BA%BF%E6%AE%B5%E6%A0%91/">undefined</a></div><div class="post-title fs14"><a href="/2021/04/29/2020-12-18-RE-honeycomb/">or prev: undefined</a></div></section></div>
-
-
-
+    <p>旧文迁移</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    Posted on&nbsp;<time datetime='2020-12-17T12:29:53.000Z'>2020-12-17</time>
+  </span>
+  
+  
+</div>
+</article></a></div>
+  
 
 
 
