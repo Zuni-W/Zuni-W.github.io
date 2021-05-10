@@ -22,7 +22,7 @@
   
     <meta property="og:type" content="website">
 <meta property="og:title" content="王某杂谈">
-<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:url" content="http://example.com/page/3/index.html">
 <meta property="og:site_name" content="王某杂谈">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Zuni">
@@ -136,230 +136,41 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post article" href="/2021/02/08/obfu/"><article class="excerpt md">
+  <div class="post-list post"><a class="post-card post article" href="/2020/01/04/AD%20guess_num/"><article class="excerpt md">
 
 <h2 class="post-title">
-  obfu
+  AD_guess_num
 </h2>
 <div class='excerpt'>
   
-    <p>旧文转载</p>
+    <p>靶场random WP怎么突然想起来写这个题了呢，因为人肉计算机。
+没错，random那个题我也是人肉跑出来的。虽然我试过修改种子再生成随机数，但似乎效果并不好。于是鉴于每个数都在1~6之间，就用人工的方案了。方案跟那个comb题差不多，本地跑出来数据之后再用pwntool上传就可以了。
+AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一遍。
+确定偏...</p>
   
 </div>
 <div class='meta cap'>
   <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-02-08T12:13:48.000Z'>2021-02-08</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/02/07/emarm/"><article class="excerpt md">
-
-<h2 class="post-title">
-  emarm
-</h2>
-<div class='excerpt'>
-  
-    <p>GOT表与PLT表PLT表存储出现过的GOT表地址，GOT表指向全局函数所在的地址。
-所以如果在运行时将GOT表中的某个函数改为目标函数并运行就可以达到访问shell的目的。
-one_gadget搜索某个版本的libc中的所有调用系统的函数，并返回成功条件。
-HWS计划 emarm WP读流程，发现第一步是字符串匹配，但是有长度参数，所以直接传入’\0’截断。
-没有机会溢出。没有格式化输出。...</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-02-07T08:20:00.000Z'>2021-02-07</time>
+    发布于&nbsp;<time datetime='2020-01-04T08:26:00.000Z'>2020-01-04</time>
   </span>
   
     
       
       <span class="cap breadcrumb">post</span>
     
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/01/17/AD-cg-pwn2/"><article class="excerpt md">
-
-<h2 class="post-title">
-  AD_cg_pwn2
-</h2>
-<div class='excerpt'>
-  
-    <p>cgpwn2 WP这题本身没啥好说的，主要是不要被大大的pwn迷惑了，实际使用的是_system函数另外，暂时未知替换return后为什么要先填充一个空字再填入commend参数地址，需要继续去读函数在栈上的具体模式，懂了再回来更。
-半懂了，这个地方的空字是函数的返回值，但具体在栈上的实现下周再更吧。
-另外，做这个题途中配置了vim的pwn相关代码复用，也算是有点收获
-</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-01-17T12:00:59.000Z'>2021-01-17</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/01/17/AD-string/"><article class="excerpt md">
-
-<h2 class="post-title">
-  AD_string
-</h2>
-<div class='excerpt'>
-  
-    <p>AD string WP这个题戏好多啊
-总而言之，终于摸到了格式化字符串漏洞的大门！
-具体步骤
-checksec发现地址是动态的，die查壳发现是64位
-
-运行一下全是字，然后发现诶，有secret,看来是好东西（当时应该想到是地址的）。
-
-打开发现居然有secret地址输出诶！（当时应该想到是格式化字符串的）
-
-
-4.然后读流程，基本上就是文字游戏，注意两点：
-
-
-游戏中间有个printf...</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-01-17T11:59:23.000Z'>2021-01-17</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/01/17/int-overflow/"><article class="excerpt md">
-
-<h2 class="post-title">
-  int_overflow
-</h2>
-<div class='excerpt'>
-  
-    <p>“万物皆可溢出”1.通过某个变量溢出获取值来控制流程
-2.通过程序段溢出修改流程
-具体流程1.查函数列表看到后门函数地址
-2.注意到这里的字符串函数只有strcpy，而调用的触发条件是用字符串长度赋值的int8变量大于3小于8
-3.注意字越短越容易溢出，遂用长度溢出覆盖
-</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-01-17T11:56:48.000Z'>2021-01-17</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/01/11/AD-start/"><article class="excerpt md">
-
-<h2 class="post-title">
-  AD_start
-</h2>
-<div class='excerpt'>
-  
-    <p>Hello, CTF注意sprintf函数的用法sprintf(&amp;s,format_string,p1,p2…)将按照format_string，并填入参数pn得到的字符串输入s备注：sprintf用法总结https://baike.baidu.com/item/sprintf/9703430?fr=aladdin
-maze注意左右上下移动对应的操作数，以及x轴与y轴对应的前后
-cs...</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-01-11T11:54:50.000Z'>2021-01-11</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/01/10/Bbbbbabyre/"><article class="excerpt md">
-
-<h2 class="post-title">
-  Bbbbbbbbbabyre
-</h2>
-<div class='excerpt'>
-  
-    <p>摸鱼文重写了。
-一、无法反汇编怎么办本题的主函数在不经过处理的情况下没有办法反汇编，解决途径有二：
-1. 将函数体选中，直接转化为函数
-
-2. 在函数体最后sp堆栈不平衡的位置把多余的代码行去掉
-
-这种情况基本是函数内部的函数调用有问题, 某个函数的函数声明有问题. 此时选项-&gt;general-&gt;disassembly-&gt;Display disassembly line p...</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-01-10T08:27:00.000Z'>2021-01-10</time>
-  </span>
-  
-    
-      
-      <span class="cap breadcrumb">post</span>
-    
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2020/12/18/honeycomb/"><article class="excerpt md">
-
-<h2 class="post-title">
-  honeycomb
-</h2>
-<div class='excerpt'>
-  
-    <p>旧号迁移</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2020-12-18T12:34:17.000Z'>2020-12-18</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2020/12/17/%E6%95%B0%E8%AE%BA%E6%9D%BF%E5%AD%90/"><article class="excerpt md">
-
-<h2 class="post-title">
-  数论板子
-</h2>
-<div class='excerpt'>
-  
-    <p>旧文迁移</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2020-12-17T12:29:53.000Z'>2020-12-17</time>
-  </span>
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2020/12/17/%E7%BA%BF%E6%AE%B5%E6%A0%91/"><article class="excerpt md">
-
-<h2 class="post-title">
-  csapp-shlab-WP
-</h2>
-<div class='excerpt'>
-  
-    <p>新人蒟蒻前来水一次博客emmmmm线段树真是个耗头发的好东西。话不多说上代码【语文差的555】    
-头文件及定义等12345678910111213141516171819//其实用不到这么多#include&lt;iostream&gt;#include&lt;cstdio&gt;#include&lt;cmath&gt;#include&lt;cstring&gt;#include&...</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2020-12-17T09:17:27.000Z'>2020-12-17</time>
-  </span>
   
   
 </div>
 </article></a></div>
   
   <div class='paginator-wrap dis-select'>
-    <a class='paginator prev' href='/'>
+    <a class='paginator prev' href='/page/2/'>
       <img src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/arrow/f049bbd4e88ec.svg'/>
     </a>
     <div class='paginator current'>
-      2<span class='sep'></span>3
+      3<span class='sep'></span>3
     </div>
-    <a class='paginator next' href='/page/3/'>
+    <a class='paginator next disable' href='/'>
       <img src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/arrow/064b95430caf4.svg'/>
     </a>
   </div>

