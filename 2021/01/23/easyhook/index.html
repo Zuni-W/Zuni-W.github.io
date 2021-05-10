@@ -17,19 +17,21 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>post - 王某杂谈</title>
+  <title>easyhook - 王某杂谈</title>
 
   
-    <meta name="description" content="动态调试看地图！！！！一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。 Enter text in Markdown. Use the toolbar above, or click the ? button for formatting help.">
+    <meta name="description" content="HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底） 遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣 12key &#x3D; (char *)crypto - (ch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="王某杂谈">
-<meta property="og:url" content="http://example.com/2021/04/29/2021-01-23-RE-easymaze/index.html">
+<meta property="og:title" content="easyhook">
+<meta property="og:url" content="http://example.com/2021/01/23/easyhook/index.html">
 <meta property="og:site_name" content="王某杂谈">
-<meta property="og:description" content="动态调试看地图！！！！一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。 Enter text in Markdown. Use the toolbar above, or click the ? button for formatting help.">
+<meta property="og:description" content="HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底） 遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣 12key &#x3D; (char *)crypto - (ch">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-29T12:10:48.102Z">
-<meta property="article:modified_time" content="2021-02-23T08:37:11.535Z">
+<meta property="article:published_time" content="2021-01-23T12:02:53.000Z">
+<meta property="article:modified_time" content="2021-05-10T12:03:25.210Z">
 <meta property="article:author" content="Zuni">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="AD">
 <meta name="twitter:card" content="summary">
   
   
@@ -72,7 +74,7 @@
     
       
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E7%9C%8B%E5%9C%B0%E5%9B%BE%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81"><span class="toc-text">动态调试看地图！！！！</span></a></li></ol></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HOOK%E6%8A%80%E6%9C%AF"><span class="toc-text">HOOK技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%87%E4%BA%8B%E4%B8%8D%E5%86%B3%EF%BC%8C%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%EF%BC%81"><span class="toc-text">遇事不决，动态调试！</span></a></li></ol></div></div></div>
 
     
   
@@ -96,16 +98,23 @@
       
     </div>
     <div id='post-meta'>
-      发布于&nbsp;<time datetime='2021-04-29T12:10:48.102Z'>2021-04-29</time>
+      发布于&nbsp;<time datetime='2021-01-23T12:02:53.000Z'>2021-01-23</time>
     </div>
   
   </div>
 
 
 <article class='content md post'>
+<h1 class="article-title"><span>easyhook</span></h1>
+<h2 id="HOOK技术"><a href="#HOOK技术" class="headerlink" title="HOOK技术"></a>HOOK技术</h2><p>hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）</p>
+<h2 id="遇事不决，动态调试！"><a href="#遇事不决，动态调试！" class="headerlink" title="遇事不决，动态调试！"></a>遇事不决，动态调试！</h2><p>这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。</p>
+<p>另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key &#x3D; (char *)crypto - (char *)lpAddress - 5;</span><br><span class="line">return sub_4010D0();</span><br></pre></td></tr></table></figure>
 
-<h2 id="动态调试看地图！！！！"><a href="#动态调试看地图！！！！" class="headerlink" title="动态调试看地图！！！！"></a>动态调试看地图！！！！</h2><p>一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。</p>
-<p>Enter text in <a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/">Markdown</a>. Use the toolbar above, or click the <strong>?</strong> button for formatting help.</p>
+<p>这一句对应的反汇编是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.text:004011FC lea     eax, crypto</span><br><span class="line">.text:00401202 mov     ebx, lpAddress</span><br><span class="line">.text:00401208 sub     eax, ebx</span><br><span class="line">.text:0040120A sub     eax, 5</span><br><span class="line">.text:0040120D mov     key, eax</span><br><span class="line">.text:00401212 call    sub_4010D0</span><br><span class="line">.text:00401217 pop     edi</span><br><span class="line">.text:00401218 pop     esi</span><br><span class="line">.text:00401219 pop     ebx</span><br><span class="line">.text:0040121A retn</span><br></pre></td></tr></table></figure>
+
+<p>估测是将函数放在了返回寄存器里，然后再通过函数回退去调用，不过具体细节还需要考证。</p>
 
 
 <div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
@@ -113,7 +122,7 @@
 
 </article>
 
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/29/2021-01-23-RE-easyhook/">undefined</a></div><div class="post-title fs14"><a href="/2021/04/29/2021-01-24-RE-BABERE/">上一篇：undefined</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/01/18/web-try/">web_try</a></div><div class="post-title fs14"><a href="/2021/01/24/BABYRE/">上一篇：BABYRE</a></div></section></div>
 
 
 
