@@ -4,7 +4,7 @@
 <head>
   <meta name="generator" content="Hexo 5.4.0">
   <meta charset="utf-8">
-  <meta name="robots" content="noindex,follow">
+  
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
@@ -17,15 +17,20 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>标签：红帽 - 王某杂谈</title>
+  <title>csapp-malloc-lab - 王某杂谈</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="王某杂谈">
-<meta property="og:url" content="http://example.com/tags/%E7%BA%A2%E5%B8%BD/index.html">
+    <meta name="description" content="内存管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="csapp-malloc-lab">
+<meta property="og:url" content="http://example.com/2021/05/19/csapp-malloc-lab/index.html">
 <meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="内存管理。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-19T05:03:32.000Z">
+<meta property="article:modified_time" content="2021-05-20T09:17:05.081Z">
 <meta property="article:author" content="Zuni">
+<meta property="article:tag" content="作业">
 <meta name="twitter:card" content="summary">
   
   
@@ -67,24 +72,8 @@
   
     
       
-      <div class='widget-wrap' id='markdown'>
-  <div class='widget-header h4 dis-select'>
-    <span class='name'>欢迎</span>
-  </div>
-  <div class='widget-body fs14'>
-    
-      <p>新博客，新生活</p>
-
-    
-  </div>
-</div>
-
-    
-  
-    
       
-      
-<div class="widget-wrap" id="recent"><div class="widget-header h4 dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="/atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="post-title reveal"><div class="cap"><time>2021-05-25</time></div><a href="/2021/05/25/mtctf/">mtctf WP</a></div><div class="post-title reveal"><div class="cap"><time>2021-05-20</time></div><a href="/2021/05/19/csapp-malloc-lab/">csapp-malloc-lab</a></div><div class="post-title reveal"><div class="cap"><time>2021-05-19</time></div><a href="/2021/05/14/LLL/">红帽密码</a></div><div class="post-title reveal"><div class="cap"><time>2021-05-16</time></div><a href="/2021/05/16/ciscn-2021/">ciscn_2021 HASH-TEAM RE/cry WP</a></div><div class="post-title reveal"><div class="cap"><time>2021-05-16</time></div><a href="/2021/01/10/Bbbbbabyre/">Bbbbbbbbbabyre</a></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%88%A9%E7%94%A8"><span class="toc-text">空间利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%95%88%E7%8E%87"><span class="toc-text">时间效率</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">前置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#memlib-h"><span class="toc-text">memlib.h</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mm-h"><span class="toc-text">mm.h</span></a></li></ol></li></ol></li></ol></div></div></div>
 
     
   
@@ -92,76 +81,99 @@
 
 
     </aside>
-    <div class='l_main list'>
+    <div class='l_main'>
       
-  
-<header class='header mobile-only'>
-  <div class='logo-wrap'>
-  
-  
-    <a class='title' href='/'>
-      王某杂谈
-    </a>
-  
-</div>
-
-  <nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/wiki/">wiki</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
-</header>
-
-
 
       
 
+
+  <div class='bread-nav fs12'>
   
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-05-19T05:03:32.000Z'>2021-05-19</time>
+    </div>
+  
+  </div>
 
 
-  <div class='nav-wrap mobile-hidden'>
-  <nav class='sub post cap'>
-    
-      <a href='/'>近期发布</a>
-    
-    
-      
-        <a href='/categories'>分类</a>
-      
-    
-    
-      
-        <a class='active' href='/tags'>标签：红帽</a>
-      
-    
-    
-      
-        <a href='/archives'>归档</a>
-      
-    
-  </nav>
-</div>
+<article class='content md post'>
+<h1 class="article-title"><span>csapp-malloc-lab</span></h1>
+<p>内存管理。</p>
+<span id="more"></span>
 
-  <div class="post-list post"><a class="post-card post article" href="/2021/05/14/LLL/"><article class="excerpt md">
+<p>本次作业参考了小土刀师傅的<a target="_blank" rel="noopener" href="https://wdxtub.com/csapp/thick-csapp-lab-6/2016/04/16/">【读厚csapp系列】</a>。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本次实验主要是实现自己的内存管理系统（主体为四个函数），需要兼顾空间利用率和处理时间效率。</p>
+<h4 id="空间利用"><a href="#空间利用" class="headerlink" title="空间利用"></a>空间利用</h4><p>尽可能降低碎片化的无法重复利用的空间比例。</p>
+<ul>
+<li>按大小分类有序寻找空间</li>
+<li>适时进行释放空间的合并</li>
+</ul>
+<h4 id="时间效率"><a href="#时间效率" class="headerlink" title="时间效率"></a>时间效率</h4><p>通过多种方式优化每个操作的运行时间。</p>
+<ul>
+<li>通过宏函数/内联函数降低常数</li>
+<li>通过数据结构降低复杂度</li>
+</ul>
+<h2 id="前置文件"><a href="#前置文件" class="headerlink" title="前置文件"></a>前置文件</h2><p>在做题之前先看提供了什么</p>
+<h4 id="memlib-h"><a href="#memlib-h" class="headerlink" title="memlib.h"></a>memlib.h</h4><h6 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h6><ul>
+<li>static char *mem_start_brk;//物理基址</li>
+<li>static char *mem_brk;        //目前物理地址</li>
+<li>static char *mem_max_addr;   //最大物理地址</li>
+</ul>
+<h6 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h6><ul>
+<li><p>void mem_init(void);    </p>
+<p> 生成本次模拟所需的整个堆空间（同时生成基与最大址）</p>
+</li>
+<li><p>void mem_deinit(void);</p>
+<p>清空堆空间</p>
+</li>
+<li><p>void *mem_sbrk(int incr);</p>
+<p>增加当前地址incr长度，（相当于malloc）并返回旧址。</p>
+</li>
+<li><p>void mem_reset_brk(void); </p>
+<p>将当前地址重置为基址</p>
+</li>
+<li><p>void *mem_heap_lo(void);</p>
+<p>地址的低32位（注意是基址的低32位，这说明其实低32位不变）</p>
+</li>
+<li><p>void *mem_heap_hi(void);</p>
+<p>地址的高32位（这里是目前地址）</p>
+</li>
+<li><p>size_t mem_heapsize(void);</p>
+<p>目前占用的地址</p>
+</li>
+<li><p>size_t mem_pagesize(void);</p>
+<p>系统页数</p>
+</li>
+</ul>
+<h4 id="mm-h"><a href="#mm-h" class="headerlink" title="mm.h"></a>mm.h</h4><h6 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h6><ul>
+<li><p>#define ALIGNMENT 8</p>
+<p>对齐的长度</p>
+</li>
+<li><p>#define ALIGN(size) (((size) + (ALIGNMENT-1)) &amp; ~0x7)</p>
+<p>整齐化之后的值</p>
+</li>
+<li><p>#define SIZE_T_SIZE (ALIGN(sizeof(size_t)))</p>
+<p>size_t 整齐化后的大小</p>
+</li>
+</ul>
 
-<h2 class="post-title">
-  红帽密码
-</h2>
-<div class='excerpt'>
-  
-    <p>
 
-这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。
-赛中注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。
-复现关于格密码orz算了我不知道我懂不懂。
-LLL算法个人理解，对于$(\textbf{b}_1,\textbf{b}_2,…,\textbf{b}_n)^T$这几组基，通过辗转相减规约化，得...</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-05-14T00:27:17.000Z'>2021-05-14</time>
-  </span>
-  
-  
-</div>
-</article></a></div>
-  
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/16/ciscn-2021/">ciscn_2021 HASH-TEAM RE/cry WP</a></div><div class="post-title fs14"><a href="/2021/05/25/mtctf/">上一篇：mtctf WP</a></div></section></div>
+
+
+
 
 
 

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>mtctf WP - 王某杂谈</title>
+
+  
+    <meta name="description" content="好气啊！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mtctf WP">
+<meta property="og:url" content="http://example.com/2021/05/25/mtctf/index.html">
+<meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="好气啊！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-25T03:32:34.000Z">
+<meta property="article:modified_time" content="2021-05-25T09:39:30.915Z">
+<meta property="article:author" content="Zuni">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="mtctf">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/wiki/">wiki</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%9B%E4%BA%8B%E5%A4%8D%E7%9B%98"><span class="toc-text">赛事复盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WP"><span class="toc-text">WP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#easy-rsa"><span class="toc-text">easy_rsa</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#random"><span class="toc-text">random</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RSA-sig"><span class="toc-text">RSA_sig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#random1"><span class="toc-text">random1</span></a></li></ol></li></ol></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-05-25T03:32:34.000Z'>2021-05-25</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>mtctf WP</span></h1>
+<p>好气啊！</p>
+<span id="more"></span>
+
+<h2 id="赛事复盘"><a href="#赛事复盘" class="headerlink" title="赛事复盘"></a>赛事复盘</h2><p>这次比赛应该是HASH-TEAM迄今为止合作最为优良的一次，虽然大三PWN爷因ddl没有打，大二misc哥神秘消失，只剩我们几个大一狗（和从隔壁院拉来玩的misc哥哥），排除那个辣鸡密码最后一题的干扰的话，进前二十还是有很大希望的。</p>
+<p>以下是密码学部分的WP。</p>
+<h2 id="WP"><a href="#WP" class="headerlink" title="WP"></a>WP</h2><h4 id="easy-rsa"><a href="#easy-rsa" class="headerlink" title="easy_rsa"></a>easy_rsa</h4><p>真的很easy，第一步是一个rsa的padding 攻击，第二步是一次一密的manytimespad 攻击。</p>
+<p>padding攻击的推导学习如下：</p>
+<p>附原文：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/158944">rsa_padding_attack</a></p>
+<p>脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> *</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;m1=m+p1&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;m2=m+p2&#x27;</span>)</span><br><span class="line">n=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;n(hex):&quot;</span>)[<span class="number">2</span>:],<span class="number">16</span>)</span><br><span class="line">c1=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;c1(hex):&quot;</span>)[<span class="number">2</span>:],<span class="number">16</span>)</span><br><span class="line">p1=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;p1(hex):&quot;</span>)[<span class="number">2</span>:],<span class="number">16</span>)</span><br><span class="line">c2=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;c2(hex):&quot;</span>)[<span class="number">2</span>:],<span class="number">16</span>)</span><br><span class="line">p2=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;p2(hex):&quot;</span>)[<span class="number">2</span>:],<span class="number">16</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;m1=a*m2+p1-p2&#x27;</span>)</span><br><span class="line">a=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;a(hex):&quot;</span>)[<span class="number">2</span>:],<span class="number">16</span>)</span><br><span class="line">b=p1-p2</span><br><span class="line">m=((<span class="number">3</span>*b*((a**<span class="number">3</span>)*c2-b**<span class="number">3</span>)*invert(c1-c2*(a**<span class="number">3</span>)+<span class="number">2</span>*(b**<span class="number">3</span>),n)+b)*invert(a,n)-p2)%n</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> *</span><br><span class="line"><span class="built_in">print</span>(unhexlify(<span class="built_in">hex</span>(m)[<span class="number">2</span>:]))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>manytimespad经典脚本，丢在这里。</p>
+<p>需要注意的是，由于manytimespad是概率算法，需要对某些位进行人工校对。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">ciphertexts=[</span><br><span class="line"><span class="string">&#x27;280316470206017f5f163a3460100b111b2c254e103715600f13&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;091b0f471d05153811122c70340c0111053a394e0b39500f0a18&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;4638080a1e49243e55531a3e23161d411a362e4044111f374409&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0e0d15470206017f59122935601405421d3a244e10371560140f&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;031a08080e1a540d62327f242517101d4e2b2807177f13280511&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0a090f001e491d2c111d3024601405431a36231b083e022c1d&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;16000406080c543854077f24280144451c2a254e093a0333051a&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;02050701120a01334553393f32441d5e1b716027107f19334417&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;131f15470800192f5d167f352e0716481e2b29010a7139600c12&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;1609411e141c543c501d7f232f0812544e2b2807177f00320b1f&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0a090c470a1c1d3c5a1f2670210a0011093a344e103715600712&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;141e04040f49153142043a22601711520d3a331d0826&#x27;</span></span><br><span class="line">]</span><br><span class="line">NUM_CIPHER = <span class="built_in">len</span>(ciphertexts) <span class="comment">#NUM_CIPHER=11</span></span><br><span class="line">THRESHOLD_VALUE = <span class="number">8</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">strxor</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(a) &gt; <span class="built_in">len</span>(b):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(<span class="built_in">ord</span>(x) ^ <span class="built_in">ord</span>(y)) <span class="keyword">for</span> (x, y) <span class="keyword">in</span> <span class="built_in">zip</span>(a[:<span class="built_in">len</span>(b)], b)])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>.join([<span class="built_in">chr</span>(<span class="built_in">ord</span>(x) ^ <span class="built_in">ord</span>(y)) <span class="keyword">for</span> (x, y) <span class="keyword">in</span> <span class="built_in">zip</span>(a, b[:<span class="built_in">len</span>(a)])])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letter_position</span>(<span class="params">s</span>):</span></span><br><span class="line">    position = []</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">        <span class="keyword">if</span> (s[idx] &gt;= <span class="string">&#x27;A&#x27;</span> <span class="keyword">and</span> s[idx] &lt;= <span class="string">&#x27;Z&#x27;</span>) <span class="keyword">or</span> (s[idx] &gt;= <span class="string">&#x27;a&#x27;</span> <span class="keyword">and</span> s[idx] &lt;= <span class="string">&#x27;z&#x27;</span>) <span class="keyword">or</span> s[idx] == <span class="built_in">chr</span>(<span class="number">0</span>):</span><br><span class="line">            position.append(idx)</span><br><span class="line">    <span class="keyword">return</span> position</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_space</span>(<span class="params">cipher</span>):</span></span><br><span class="line">    space_position = &#123;&#125;</span><br><span class="line">    space_possible = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> cipher_idx_1 <span class="keyword">in</span> <span class="built_in">range</span>(NUM_CIPHER):</span><br><span class="line">        space_xor = []</span><br><span class="line">        c = <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(<span class="built_in">int</span>(d, <span class="number">16</span>)) <span class="keyword">for</span> d <span class="keyword">in</span> [cipher[cipher_idx_1][i:i + <span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(cipher[cipher_idx_1]), <span class="number">2</span>)]])</span><br><span class="line">        <span class="keyword">for</span> cipher_idx_2 <span class="keyword">in</span> <span class="built_in">range</span>(NUM_CIPHER):</span><br><span class="line">            e = <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(<span class="built_in">int</span>(d, <span class="number">16</span>)) <span class="keyword">for</span> d <span class="keyword">in</span> [cipher[cipher_idx_2][i:i+<span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(cipher[cipher_idx_2]), <span class="number">2</span>)]])</span><br><span class="line">            plain_xor = strxor(c, e)</span><br><span class="line">            <span class="keyword">if</span> cipher_idx_2 != cipher_idx_1:</span><br><span class="line">                space_xor.append(letter_position(plain_xor))</span><br><span class="line">        space_possible[cipher_idx_1] = space_xor  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> cipher_idx_1 <span class="keyword">in</span> <span class="built_in">range</span>(NUM_CIPHER):</span><br><span class="line">        spa = []</span><br><span class="line">        <span class="keyword">for</span> position <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">400</span>):</span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> cipher_idx_2 <span class="keyword">in</span> <span class="built_in">range</span>(NUM_CIPHER - <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">if</span> position <span class="keyword">in</span> space_possible[cipher_idx_1][cipher_idx_2]:</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> count &gt; THRESHOLD_VALUE:  </span><br><span class="line">                spa.append(position)</span><br><span class="line">        space_position[cipher_idx_1] = spa  </span><br><span class="line">    <span class="keyword">return</span> space_position</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate_key</span>(<span class="params">cipher</span>):</span></span><br><span class="line">    key = [<span class="number">29</span>] * <span class="number">200</span>  </span><br><span class="line">    space = find_space(cipher)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> cipher_idx_1 <span class="keyword">in</span> <span class="built_in">range</span>(NUM_CIPHER):</span><br><span class="line">        <span class="keyword">for</span> position <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(space[cipher_idx_1])):</span><br><span class="line">            idx = space[cipher_idx_1][position] * <span class="number">2</span> </span><br><span class="line">            a = cipher[cipher_idx_1][idx] + cipher[cipher_idx_1][idx + <span class="number">1</span>]</span><br><span class="line">            key[space[cipher_idx_1][position]] = <span class="built_in">int</span>(a ,<span class="number">16</span>) ^ <span class="built_in">ord</span>(<span class="string">&#x27; &#x27;</span>) </span><br><span class="line"></span><br><span class="line">    key_str = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> key:</span><br><span class="line">        key_str += <span class="built_in">chr</span>(k)</span><br><span class="line">    <span class="keyword">return</span> key_str  </span><br><span class="line"></span><br><span class="line">result = <span class="string">&quot;&quot;</span></span><br><span class="line">key = calculate_key(ciphertexts)</span><br><span class="line">key_hex =<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">hex</span>(<span class="built_in">ord</span>(c)).replace(<span class="string">&#x27;0x&#x27;</span>, <span class="string">&#x27;&#x27;</span>)+<span class="string">&#x27; &#x27;</span> <span class="keyword">for</span> c <span class="keyword">in</span> key])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;key=\n&quot;</span>+key)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;key_hex=\n&quot;</span>+key_hex)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">ord</span>(key[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment">#key=&quot;flag&#123;it_1s_P@dd1n_@nd_p@d&#125;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(key)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(ciphertexts)):</span><br><span class="line">    f = <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(<span class="built_in">int</span>(d, <span class="number">16</span>)) <span class="keyword">for</span> d <span class="keyword">in</span> [ciphertexts[t][i:i+<span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(ciphertexts[t]), <span class="number">2</span>)]])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> letter <span class="keyword">in</span> strxor(f,key):</span><br><span class="line">             <span class="keyword">if</span> (letter&gt;=<span class="string">&#x27; &#x27;</span> <span class="keyword">and</span> letter&lt;=<span class="string">&#x27;&#125;&#x27;</span>):</span><br><span class="line">                 result+=letter</span><br><span class="line">             <span class="keyword">else</span>:</span><br><span class="line">                 result+=<span class="string">&#x27;0&#x27;</span></span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line">    result=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="random"><a href="#random" class="headerlink" title="random"></a>random</h4><p>这个题直接连靶场，第一段是一个已知ed与n，求解pq并签名的过程，这里需要通过分解ed暴力枚举哪个是合适的私钥进行加密，直接上脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=[<span class="number">3</span>,<span class="number">47</span>,<span class="number">97</span>,<span class="number">157</span>,<span class="number">1601</span>,<span class="number">21851</span>, <span class="number">56277292709098311733</span>, <span class="number">842863003249682472366877119627791407784227212205826369770241241624102599233623894956515489038200231882823515796275720517565796868777565634050439841286136730958498908985484216812390745790379384069380694859486312946676748208469080046559332149394110283426861163444586148612461696703</span>]</span><br><span class="line">e=[<span class="number">0</span>]*<span class="number">256</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>**<span class="number">8</span>):</span><br><span class="line">    t=<span class="string">&#x27;0&#x27;</span>*(<span class="number">8</span>-<span class="built_in">len</span>(<span class="built_in">bin</span>(i)[<span class="number">2</span>:]))+<span class="built_in">bin</span>(i)[<span class="number">2</span>:]</span><br><span class="line">    <span class="built_in">print</span>(t)</span><br><span class="line">    s=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(t)):</span><br><span class="line">        <span class="keyword">if</span> (t[j]==<span class="string">&#x27;1&#x27;</span>):</span><br><span class="line">            s*=p[j]</span><br><span class="line">    e[i]=s</span><br><span class="line"></span><br><span class="line">p=<span class="number">10980405508174271259925333166343579553719061316941945190323939083665489902286168861229664589365210026388298173482496757264697996404794685064674668272479771</span></span><br><span class="line">q=<span class="number">9473016801951797771267846445459738473973421588058140695253031511700407533935872397264731631901174665159278878658035094231228063878480145556088206641042779</span></span><br><span class="line">m=<span class="number">2977586969238177688788136343510734253831840749969343604581</span></span><br><span class="line">ed=<span class="number">3563225736483105767663757964850895939437686773696002911178487096580796031415653965179057012630692344510786639289764837381745729106408000203666201724099978695932368871885604099587719393152976934607128732108404042096355012051169236089620505421627586309618317607971836222910097506025923742035914623661579380093911361</span></span><br><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="keyword">if</span>(e[i]*invert(e[i],(p-<span class="number">1</span>)*(q-<span class="number">1</span>))!=ed):</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    d=invert(e[i],(p-<span class="number">1</span>)*(q-<span class="number">1</span>))</span><br><span class="line">    pr=remote(<span class="string">&#x27;47.105.112.9&#x27;</span>,<span class="number">1123</span>)</span><br><span class="line">    pr.recvuntil(<span class="string">&#x27;enter sign:&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    pr.sendline(<span class="built_in">str</span>(powmod(m,d,q)))</span><br><span class="line">    s=pr.recv()</span><br><span class="line">    s=pr.recv()</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">b&#x27;error&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> s):</span><br><span class="line">        <span class="built_in">print</span>(s)</span><br><span class="line">        pr.interactive()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;wrong&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里有一个点是，如何进行暴力枚举，这次采用的手法是生成01背包串然后按位选取，方便计算复杂度，也相对容易实现。</p>
+<p>然后是一个LCG生成随机数，没想学，就找了个脚本魔改。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a,b</span>):</span> </span><br><span class="line">    <span class="keyword">if</span>(b==<span class="number">0</span>): </span><br><span class="line">        <span class="keyword">return</span> a </span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        <span class="keyword">return</span> gcd(b,a%b) </span><br><span class="line">s = [<span class="number">3732074616716238200873760199583586585380050413464247806581164994328669362805685831589304096519259751316788496505512</span> , <span class="number">8890204100026432347745955525310288219105398478787537287650267015873395979318988753693294398552098138526129849364748</span> , <span class="number">3443072315415198209807083608377973177101709911155814986883368551162572889369288798755476092593196361644768257296318</span> , <span class="number">4505278089908633319897964655164810526240982406502790229247008099600376661475710376587203809096899113787029887577355</span> , <span class="number">9059646273291099175955371969413555591934318289156802314967132195752692549263532407952697867959054045527470269661073</span> , <span class="number">3085024063381648326788677294168591675423302286026271441848856369032582049512915465082428729187341510738008226870900</span> , <span class="number">8296028984288559154928442622341616376293205834716507766500770482261973424044111061163369828951815135486853862929166</span> , <span class="number">2258750259954363171426415561145579135511127336142626306021868972064434742092392644953647611210700787749996466767026</span> , <span class="number">4382123130034944542655156575000710851078842295367353943199512878514639434770161602326115915913531417058547954936492</span> , <span class="number">1098293359822342785200547274854337991360189639864781168096457916133912890897651117338289654910429603148324390094392</span>]</span><br><span class="line">t = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">9</span>):</span><br><span class="line">    t.append(s[i]-s[i-<span class="number">1</span>]) </span><br><span class="line">all_n = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>):</span><br><span class="line">    all_n.append(gcd((t[i+<span class="number">1</span>]*t[i-<span class="number">1</span>]-t[i]*t[i]), (t[i+<span class="number">2</span>]*t[i]-t[i+<span class="number">1</span>]*t[i+<span class="number">1</span>]))) </span><br><span class="line"></span><br><span class="line">MMI = <span class="keyword">lambda</span> A, n,s=<span class="number">1</span>,t=<span class="number">0</span>,N=<span class="number">0</span>: (n &lt; <span class="number">2</span> <span class="keyword">and</span> t%N <span class="keyword">or</span> MMI(n, A%n, t, s-A//n*t, N <span class="keyword">or</span> n),-<span class="number">1</span>)[n&lt;<span class="number">1</span>] <span class="comment">#逆元计算</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> all_n:</span><br><span class="line">    n=<span class="built_in">abs</span>(n)</span><br><span class="line">    <span class="keyword">if</span> n==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    a=(s[<span class="number">2</span>]-s[<span class="number">1</span>])*MMI((s[<span class="number">1</span>]-s[<span class="number">0</span>]),n)%n</span><br><span class="line">    ani=MMI(a,n)</span><br><span class="line">    b=(s[<span class="number">1</span>]-a*s[<span class="number">0</span>])%n</span><br><span class="line">    seed = (ani*(s[<span class="number">0</span>]-b))%n</span><br><span class="line">    plaintext=seed</span><br><span class="line">    <span class="built_in">print</span>(long_to_bytes(plaintext))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>附原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/superprintf/article/details/108964563">LCG</a></p>
+<h4 id="RSA-sig"><a href="#RSA-sig" class="headerlink" title="RSA_sig"></a>RSA_sig</h4><p>第一步工作证明，直接爆破sha224.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha224</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> *</span><br><span class="line">s=<span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#x27;</span></span><br><span class="line">m0=<span class="built_in">input</span>(<span class="string">&#x27;XXX+?:&#x27;</span>)</span><br><span class="line">a=<span class="built_in">input</span>(<span class="string">&quot;ans:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">            t=s[i]+s[j]+s[k]</span><br><span class="line">            m=t+m0</span><br><span class="line">            p=sha224()</span><br><span class="line">            p.update(m.encode(<span class="string">&quot;UTF-8&quot;</span>))</span><br><span class="line">            d=p.hexdigest()</span><br><span class="line">            <span class="keyword">if</span> a <span class="keyword">in</span> d:</span><br><span class="line">                <span class="built_in">print</span>(t)</span><br></pre></td></tr></table></figure>
+
+<p>连上之后发现就是一个公钥签名体系，众所周知，对于RSA，“签名我”和“解密我”等价，所以求了flag再搞签名就行。</p>
+<h4 id="random1"><a href="#random1" class="headerlink" title="random1"></a>random1</h4><p>这个题随意到跟题目一样【……】</p>
+<p>第一步是lsfr，因为有mask，可以直接n位解决。需要注意，加密脚本里掩码少两个f。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#python2.7</span></span><br><span class="line"><span class="keyword">import</span> libnum</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LFSR_inv</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    <span class="built_in">str</span>=<span class="built_in">bin</span>(R)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</span><br><span class="line">    new=<span class="built_in">str</span>[-<span class="number">1</span>:]+<span class="built_in">str</span>[:-<span class="number">1</span>]</span><br><span class="line">    new=<span class="built_in">int</span>(new,<span class="number">2</span>)                   </span><br><span class="line">    i = (new &amp; mask) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    lastbit = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i != <span class="number">0</span>:</span><br><span class="line">        lastbit ^= (i &amp; <span class="number">1</span>)</span><br><span class="line">        i = i &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> R&gt;&gt;<span class="number">1</span> | lastbit&lt;&lt;<span class="number">31</span>      </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lfsr</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    output = (R &lt;&lt; <span class="number">1</span>) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    i=(R&amp;mask)&amp;<span class="number">0xffffffff</span></span><br><span class="line">    lastbit=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i!=<span class="number">0</span>: </span><br><span class="line">        lastbit^=(i&amp;<span class="number">1</span>)</span><br><span class="line">        i=i&gt;&gt;<span class="number">1</span></span><br><span class="line">    output^=lastbit</span><br><span class="line">    <span class="keyword">return</span> (output,lastbit)</span><br><span class="line">mask = <span class="number">0b10100100000010000000100010010001</span></span><br><span class="line">data=<span class="built_in">open</span>(<span class="string">&#x27;change2&#x27;</span>).read()</span><br><span class="line">data1=data[:<span class="number">4</span>]</span><br><span class="line">c=libnum.s2n(data1)                   </span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    c=LFSR_inv(c,mask)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(c))</span><br><span class="line">key1=c</span><br><span class="line">c=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    tmp=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">        (key1,out)=lfsr(key1,mask)</span><br><span class="line">        tmp=(tmp&lt;&lt;<span class="number">1</span>)^out</span><br><span class="line">    c+=<span class="built_in">chr</span>(tmp)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br><span class="line"><span class="built_in">print</span>(c==data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后是魔改RC4</p>
+<p>这里的密钥是上文密钥的字节串【……】（临门一脚orz）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64encode</span><br><span class="line"><span class="comment">#from flag import flag,key_read</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">global</span> x,N</span><br><span class="line">N=<span class="number">100</span></span><br><span class="line">x=<span class="number">16</span>*<span class="number">16</span></span><br><span class="line"><span class="comment">#assert len(bin(key_read)[2:])==32</span></span><br><span class="line"><span class="comment">#assert key_read.startwith(&quot;0x&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lfsr</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    output = (R &lt;&lt; <span class="number">1</span>) &amp; <span class="number">0xffffff</span></span><br><span class="line">    i=(R&amp;mask)&amp;<span class="number">0xffffff</span></span><br><span class="line">    lastbit=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i!=<span class="number">0</span>: </span><br><span class="line">        lastbit^=(i&amp;<span class="number">1</span>)</span><br><span class="line">        i=i&gt;&gt;<span class="number">1</span></span><br><span class="line">    output^=lastbit</span><br><span class="line">    <span class="keyword">return</span> (output,lastbit)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">s_box_a</span>():</span></span><br><span class="line">    s=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x):</span><br><span class="line">        s.append(i)</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">key_padding</span>(<span class="params">key</span>):</span></span><br><span class="line">    k=[<span class="number">0</span>]*x</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x):</span><br><span class="line">        k[i]=key[(i)% <span class="built_in">len</span>(key)]</span><br><span class="line">    <span class="keyword">return</span> k</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">s_box</span>(<span class="params">s,key</span>):</span></span><br><span class="line">    j=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x):</span><br><span class="line">        j=(j+s[i]+key[i])%x</span><br><span class="line">        s[j],s[i]=s[i],s[j]</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    key1=<span class="string">b&#x27;0x1afea246&#x27;</span></span><br><span class="line">    cm=<span class="number">128834039630569249954916947026853954267142833779669</span></span><br><span class="line">    cm=<span class="built_in">hex</span>(cm)[<span class="number">2</span>:]</span><br><span class="line">    cm=b64decode(<span class="string">&quot;WCbeI/BfRYydhk43yF1MIdOk4zPV&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(cm))</span><br><span class="line">    <span class="built_in">print</span>(cm)   </span><br><span class="line">    mask=<span class="number">0b10100100000010000000100010010001</span></span><br><span class="line">    key=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(key1)):</span><br><span class="line">        key.append(key1[i])</span><br><span class="line">    key=key_padding(key)</span><br><span class="line">    sbox=s_box(s_box_a(),key)</span><br><span class="line">    i=j=<span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    c=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(sbox)</span><br><span class="line">    <span class="built_in">print</span>()    </span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cm)):</span><br><span class="line">        i = (i+<span class="number">1</span>)%x</span><br><span class="line">        j = (j+sbox[i])%x</span><br><span class="line">        sbox[i],sbox[j]=sbox[j],sbox[i]</span><br><span class="line">        t=(sbox[i]+sbox[j])%(x//<span class="number">2</span>)</span><br><span class="line">        c+=<span class="built_in">chr</span>(cm[k]^sbox[t])</span><br><span class="line">    <span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/19/csapp-malloc-lab/">csapp-malloc-lab</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
