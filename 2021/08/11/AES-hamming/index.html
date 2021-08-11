@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>AES-hamming - 王某杂谈</title>
+
+  
+    <meta name="description" content="复盘一道cybrics的密码题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AES-hamming">
+<meta property="og:url" content="http://example.com/2021/08/11/AES-hamming/index.html">
+<meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="复盘一道cybrics的密码题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://uploader.shimo.im/f/W7BuHoGqS2LG36Hg.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2Mjg2NjY3MTMsImciOiJZY1RXY1JLQ0pDdGMzYzg2IiwiaWF0IjoxNjI4NjY2NDEzLCJ1c2VySWQiOjYxODg1NzEyfQ.lWbU08PWSv-PqjRuP7CkXGEj0vOy1qgUIVGpZQ_kllU">
+<meta property="og:image" content="https://uploader.shimo.im/f/zVAiOrNzbRYqetQc.jpg!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2Mjg2NjY3MTMsImciOiJZY1RXY1JLQ0pDdGMzYzg2IiwiaWF0IjoxNjI4NjY2NDEzLCJ1c2VySWQiOjYxODg1NzEyfQ.lWbU08PWSv-PqjRuP7CkXGEj0vOy1qgUIVGpZQ_kllU">
+<meta property="article:published_time" content="2021-08-11T03:22:42.000Z">
+<meta property="article:modified_time" content="2021-08-11T07:27:48.180Z">
+<meta property="article:author" content="Zuni">
+<meta property="article:tag" content="cry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://uploader.shimo.im/f/W7BuHoGqS2LG36Hg.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2Mjg2NjY3MTMsImciOiJZY1RXY1JLQ0pDdGMzYzg2IiwiaWF0IjoxNjI4NjY2NDEzLCJ1c2VySWQiOjYxODg1NzEyfQ.lWbU08PWSv-PqjRuP7CkXGEj0vOy1qgUIVGpZQ_kllU">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/wiki/">wiki</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%9B%E4%B8%AD%E5%9B%9E%E6%83%B3"><span class="toc-text">赛中回想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%9B%98"><span class="toc-text">赛后复盘</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-08-11T03:22:42.000Z'>2021-08-11</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>AES-hamming</span></h1>
+<p>复盘一道cybrics的密码题。</p>
+<span id="more"></span>
+
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><p>题目提到数据发生了错误，但需要我们进行纠错，纠错用上了汉明码。</p>
+<p>题目源码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;python3.7</span><br><span class="line">import hashlib</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NUM_REDUNDANT_BITS &#x3D; 7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def pos_redundant_bits(data, r):</span><br><span class="line">    # Place redundancy bits to the positions of the power of 2</span><br><span class="line">    j &#x3D; 0</span><br><span class="line">    k &#x3D; 1</span><br><span class="line">    m &#x3D; len(data)</span><br><span class="line">    res &#x3D; &#39;&#39;</span><br><span class="line"></span><br><span class="line">    # Insert &#39;0&#39; to the positions of the power of 2</span><br><span class="line">    for i in range(1, m + r + 1):</span><br><span class="line">        if (i &#x3D;&#x3D; 2 ** j):</span><br><span class="line">            res &#x3D; res + &#39;0&#39;</span><br><span class="line">            j +&#x3D; 1</span><br><span class="line">        else:</span><br><span class="line">            res &#x3D; res + data[-1 * k]</span><br><span class="line">            k +&#x3D; 1</span><br><span class="line">    #res&#x3D; r0 r1 s-1 r2 s-2</span><br><span class="line">    return res[::-1]</span><br><span class="line">    #res&#x3D;s-2 r 2 s-1 r 1 r 0 共127</span><br><span class="line">    #    122 123 124 125 126</span><br><span class="line">  </span><br><span class="line">def calc_parity_bits(arr, r):</span><br><span class="line">    n &#x3D; len(arr)</span><br><span class="line"></span><br><span class="line">    # Searching for r parity bit</span><br><span class="line">    for i in range(r):</span><br><span class="line">        val &#x3D; 0</span><br><span class="line">        for j in range(1, n + 1):</span><br><span class="line"></span><br><span class="line">            # If position has 1 in ith significant</span><br><span class="line">            # position then Bitwise OR the array value</span><br><span class="line">            # to find parity bit value.</span><br><span class="line">            if (j &amp; (2 ** i) &#x3D;&#x3D; (2 ** i)):</span><br><span class="line">                val &#x3D; val ^ int(arr[-1 * j])</span><br><span class="line">                # -1 * j is given since array is reversed</span><br><span class="line"></span><br><span class="line">        # String Concatenation</span><br><span class="line">        # (0 to n - 2^r) + parity bit + (n - 2^r + 1 to n)</span><br><span class="line">        arr &#x3D; arr[:n - (2 ** i)] + str(val) + arr[n - (2 ** i) + 1:]</span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def calc_final_parity(arr):</span><br><span class="line">    # Add a parity bit to the last bit of 128b string</span><br><span class="line">    return &quot;0&quot; if arr.count(&quot;1&quot;) % 2 &#x3D;&#x3D; 0 else &quot;1&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def hamming_encode_block(block):</span><br><span class="line">    bin_block &#x3D; &#39;&#39;.join([bin(bt)[2:].zfill(8) for bt in block])</span><br><span class="line">    arr &#x3D; pos_redundant_bits(bin_block, NUM_REDUNDANT_BITS)</span><br><span class="line">    arr &#x3D; calc_parity_bits(arr, NUM_REDUNDANT_BITS)</span><br><span class="line">    arr +&#x3D; calc_final_parity(arr)</span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    import sys</span><br><span class="line">    if len(sys.argv) &lt; 4:</span><br><span class="line">        print(&quot;Usage: python tothemoon_encrypt.py &lt;src filename&gt; &lt;dest filename&gt; &lt;password&gt;&quot;)</span><br><span class="line">        exit()</span><br><span class="line"></span><br><span class="line">    flag &#x3D; open(sys.argv[1], &quot;rb&quot;).read()</span><br><span class="line">    password &#x3D; hashlib.md5(sys.argv[3].encode()).digest()</span><br><span class="line">    iv &#x3D; os.urandom(16)</span><br><span class="line"></span><br><span class="line">    binary_blocks &#x3D; []</span><br><span class="line"></span><br><span class="line">    # Encode each 128b block with hamming 120&#x2F;7 and add a parity bit</span><br><span class="line">    while len(flag):</span><br><span class="line">        current_block &#x3D; flag[:15]</span><br><span class="line">        if len(flag[15:]) &#x3D;&#x3D; 0:</span><br><span class="line">            current_block +&#x3D; b&#39;\x00&#39; * (15 - len(current_block) % 15)</span><br><span class="line">        flag &#x3D; flag[15:]</span><br><span class="line"></span><br><span class="line">        binary_blocks.append(hamming_encode_block(current_block))</span><br><span class="line"></span><br><span class="line">    binary_flag &#x3D; &quot;&quot;.join(binary_blocks)</span><br><span class="line">    encoded_flag &#x3D; bytes(int(binary_flag[i : i + 8], 2) for i in range(0, len(binary_flag), 8))</span><br><span class="line"></span><br><span class="line">    encryptor &#x3D; AES.new(password, AES.MODE_CBC, IV&#x3D;iv)</span><br><span class="line">    encrypted_flag &#x3D; encryptor.encrypt(encoded_flag)</span><br><span class="line">    secret_data &#x3D; iv + encrypted_flag</span><br><span class="line"></span><br><span class="line">    with open(sys.argv[2], &quot;wb&quot;) as w:</span><br><span class="line">        w.write(secret_data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p> <a href="C:\Users\FGD\Desktop\tothemoon.jpg.enc">tothemoon.jpg.enc</a> </p>
+<p>（附图如上）</p>
+<h4 id="赛中回想"><a href="#赛中回想" class="headerlink" title="赛中回想"></a>赛中回想</h4><p>题目大致意思理清了和使用的算法都明晰了，但出现了几个疑问：</p>
+<ol>
+<li>到底错误出现在原图上还是传输中；</li>
+<li>这道题到底要不要爆破；</li>
+<li>15字节内最多一个错误到底怎么用。</li>
+</ol>
+<p>然后，就没啦。</p>
+<h4 id="赛后复盘"><a href="#赛后复盘" class="headerlink" title="赛后复盘"></a>赛后复盘</h4><p>直接粘复盘记录过来。</p>
+<p>题目提示主要是用hamming码纠错。</p>
+<p>目前情况如下：</p>
+<ol>
+<li><p>汉明码纠错将一组120bit即15字节转换为16字节，能纠正一位错误或检测两位错误2.对出错位置进行了分析，发现共有0xc8a组，其中错误有128处，有一组错误并自动纠错71组，能检测出两组错误的有57组，且所有错误均分布于0x404之前。</p>
+</li>
+<li><p>目前能识读的文段为G3nTl3_4Nd_5oFt_3RroR5_R4T3}</p>
+</li>
+<li><p>想到，既然题目说每15个字节最多1处错误，能不能直接按字节枚举错误的划分方式，这样的话，在同一段汉明码内如果出现了两个错误，必然分别出现在两段之内，似乎可以降低复杂度。啊啊啊写不出来wwww </p>
+</li>
+</ol>
+<p>复盘1：看到WM说通过枚举坏块然后去掉的方式可做，但这种方法根本就没用上题目信息啊啊啊，整合一下出来是这个图<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://uploader.shimo.im/f/W7BuHoGqS2LG36Hg.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2Mjg2NjY3MTMsImciOiJZY1RXY1JLQ0pDdGMzYzg2IiwiaWF0IjoxNjI4NjY2NDEzLCJ1c2VySWQiOjYxODg1NzEyfQ.lWbU08PWSv-PqjRuP7CkXGEj0vOy1qgUIVGpZQ_kllU" alt="img">我不太认WM的这个做法。 </p>
+<p>复盘2，原来题目考点是CBC比特反转。</p>
+<p>首先，错误到底发生在了哪。答：发生在了密文传输的过程中，本质还是在考AES</p>
+<p>其次，错误是怎么产生的。答：原文提到降低到每15字节最多发生一个比特翻转，这句话的实际表达居然是每十六字节一个错误。</p>
+<p>再次，怎么判定错误发生在传输而不是明文本身。答：检查出现双错误的字节，发现有连续三个的双错误字节，而其最多只能含有3*16//15+2=5个错误，说明明文本身错误这个假设不成立。</p>
+<p>再者，为什么才来复盘。答：意识到是AES本身的错误后，这几天一直在重学CBC翻转攻击，然后开始纠正，但因为对封装好的AES认识不到位，把前边的密文直接作为iv使用导致了奇怪的错误，用了两天重写脚本用统一的iv解决的。</p>
+<p>脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import hashlib</span><br><span class="line">import os</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line">passwd&#x3D;hashlib.md5(&quot;superpass&quot;.encode()).digest()</span><br><span class="line">f&#x3D;open(&#39;&#x2F;home&#x2F;zuni-w&#x2F;Desktop&#x2F;tothemoon.jpg.enc&#39;,&#39;rb&#39; )</span><br><span class="line">s&#x3D;f.read()</span><br><span class="line">f.close()</span><br><span class="line">passwd&#x3D;hashlib.md5(&quot;superpass&quot;.encode(&quot;utf-8&quot;)).digest()</span><br><span class="line">iv&#x3D;s[:16]</span><br><span class="line">enc&#x3D;AES.new(passwd,AES.MODE_CBC,iv)</span><br><span class="line">cipher&#x3D;s[16:]</span><br><span class="line">text&#x3D;enc.decrypt(cipher)</span><br><span class="line">block&#x3D;[]</span><br><span class="line">ans_block&#x3D;[]</span><br><span class="line">ed&#x3D;[]</span><br><span class="line">ink&#x3D;0</span><br><span class="line">def ham(data):</span><br><span class="line">    m&#x3D;data</span><br><span class="line">    k&#x3D;0</span><br><span class="line">    for i in range(1,128):</span><br><span class="line">        for j in range(7):</span><br><span class="line">            k^&#x3D;((int(m[-i])&amp;(i&gt;&gt;j))&lt;&lt;j)</span><br><span class="line">    return k</span><br><span class="line">def change(data):</span><br><span class="line">    t&#x3D;&#39;&#39;</span><br><span class="line">    m&#x3D;data</span><br><span class="line">    for i in range(1,len(m)+1):</span><br><span class="line">        if i not in [1,2,4,8,16,32,64]:</span><br><span class="line">            t&#x3D;m[-i]+t</span><br><span class="line">    return t</span><br><span class="line">while len(text):</span><br><span class="line">    cur&#x3D;text[:16]</span><br><span class="line">    text&#x3D;text[16:]</span><br><span class="line">    ar&#x3D;&quot;&quot;.join([bin(bt)[2:].zfill(8) for bt in cur])</span><br><span class="line">    lb&#x3D;ar[:-1]</span><br><span class="line">    ar&#x3D;ar[:-1]</span><br><span class="line">    block.append(ar)</span><br><span class="line">    ed.append(lb)</span><br><span class="line">    ex&#x3D;change(ar)</span><br><span class="line">    ans_block.append(ex)</span><br><span class="line">for i in range(len(ans_block)-1,0,-1):</span><br><span class="line">    co&#x3D;127-ham(block[i])</span><br><span class="line">    </span><br><span class="line">    if co!&#x3D;127:</span><br><span class="line">        if str(block[i].count(&#39;1&#39;)%2)&#x3D;&#x3D;ed[i]:</span><br><span class="line">            print(&quot;wrong&quot;)</span><br><span class="line"></span><br><span class="line">        ar&#x3D;block[i][:co]+str(1-int(block[i][co]))+block[i][co+1:]</span><br><span class="line">        block[i]&#x3D;ar</span><br><span class="line">        ans_block[i]&#x3D;change(ar)</span><br><span class="line">        print(bytes(int(ans_block[i][j:j+8],2) for j in range(0,len(ans_block[i]),8)))</span><br><span class="line">        pad&#x3D;(i-1)*16</span><br><span class="line">        eb&#x3D;cipher[pad:pad+16]</span><br><span class="line">        fb&#x3D;&quot;&quot;.join([bin(bt)[2:].zfill(8) for bt in eb])</span><br><span class="line">        fb&#x3D;fb[:co]+str(1-int(fb[co],2))+fb[co+1:]</span><br><span class="line">        fb&#x3D;bytes(int(fb[i:i+8],2) for i in range(0,len(fb),8))</span><br><span class="line">        rt&#x3D;enc.decrypt(cipher[:pad]+fb+cipher[pad+16:])</span><br><span class="line">        rb&#x3D;rt[pad:pad+16]</span><br><span class="line">        ar&#x3D;&quot;&quot;.join([bin(bt)[2:].zfill(8) for bt in rb])</span><br><span class="line">        nlb&#x3D;ar[-1]</span><br><span class="line">        ar&#x3D;ar[:-1]</span><br><span class="line">        block[i-1]&#x3D;ar</span><br><span class="line">        ans_block[i-1]&#x3D;change(ar)</span><br><span class="line">        ed[i-1]&#x3D;nlb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ansf&#x3D;&quot;&quot;.join(ans_block)</span><br><span class="line">ans&#x3D;bytes(int(ansf[i:i+8],2) for i in range(0,len(ansf),8))</span><br><span class="line">ans&#x3D;ans.rstrip(b&#39;\00&#39;)</span><br><span class="line">f&#x3D;open(&#39;&#x2F;home&#x2F;zuni-w&#x2F;Desktop&#x2F;tothemoon.jpg&#39;,&#39;wb&#39; )</span><br><span class="line">f.write(ans)</span><br><span class="line">f.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://uploader.shimo.im/f/zVAiOrNzbRYqetQc.jpg!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2Mjg2NjY3MTMsImciOiJZY1RXY1JLQ0pDdGMzYzg2IiwiaWF0IjoxNjI4NjY2NDEzLCJ1c2VySWQiOjYxODg1NzEyfQ.lWbU08PWSv-PqjRuP7CkXGEj0vOy1qgUIVGpZQ_kllU" alt="img"></p>
+<p>（所以WM那帮人是怎么看出来这个V3rY的) </p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/08/07/AES%E4%B8%8ESM4/">AES与SM4</a></div><div class="post-title fs14"><a href="/2021/08/11/xman-crypto/">上一篇：xman-crypto</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

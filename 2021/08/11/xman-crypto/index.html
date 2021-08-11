@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>xman-crypto - 王某杂谈</title>
+
+  
+    <meta name="description" content="xman罚坐了，看来自己和学好密码还有很远的距离~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xman-crypto">
+<meta property="og:url" content="http://example.com/2021/08/11/xman-crypto/index.html">
+<meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="xman罚坐了，看来自己和学好密码还有很远的距离~">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-11T07:28:20.000Z">
+<meta property="article:modified_time" content="2021-08-11T11:53:49.342Z">
+<meta property="article:author" content="Zuni">
+<meta property="article:tag" content="cry">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/wiki/">wiki</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ez-RSA"><span class="toc-text">Ez_RSA</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-08-11T07:28:20.000Z'>2021-08-11</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>xman-crypto</span></h1>
+<p>xman罚坐了，看来自己和学好密码还有很远的距离~</p>
+<span id="more"></span>
+
+<h2 id="Ez-RSA"><a href="#Ez-RSA" class="headerlink" title="Ez_RSA"></a>Ez_RSA</h2><p>赛后好久才看见WP来复现，所以只能本地起环境了。</p>
+<ol>
+<li><p>先搞点本地起py脚本的骚操作：</p>
+<p>封装一个pyprocess.sh执行<code>python process.py</code>指令，然后用pwn的库起。</p>
+</li>
+<li><p>读题：放魔改后的源码</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import bytes_to_long,getPrime,inverse,GCD</span><br><span class="line">from hashlib import sha256</span><br><span class="line"></span><br><span class="line">import random</span><br><span class="line">import string</span><br><span class="line">import os</span><br><span class="line">from uuid import uuid4</span><br><span class="line"></span><br><span class="line">flag&#x3D;&quot;flag&#123;&quot;+str(uuid4())+&quot;&#125;&quot;</span><br><span class="line">flag&#x3D;bytes(flag,&quot;utf-8&quot;)</span><br><span class="line"></span><br><span class="line">def proof_of_work():</span><br><span class="line">    random.seed(os.urandom(8))</span><br><span class="line">    proof &#x3D; &#39;&#39;.join([random.choice(string.ascii_letters+string.digits) for _ in range(20)])</span><br><span class="line">    _hexdigest &#x3D; sha256(proof.encode()).hexdigest()</span><br><span class="line">    print(b&quot;[+] sha256(XXXX+%s) &#x3D;&#x3D; %s&quot;.decode() % (proof[4:],_hexdigest))</span><br><span class="line">    print(&quot;[+] Plz tell me XXXX: &quot;)</span><br><span class="line">    x &#x3D; input(&quot;[-] &quot;).encode(&#39;latin1&#39;)</span><br><span class="line">    if len(x) !&#x3D; 4 or sha256(x+proof[4:].encode()).hexdigest() !&#x3D; _hexdigest:</span><br><span class="line">        return False</span><br><span class="line">    return True</span><br><span class="line"></span><br><span class="line">def init_key():</span><br><span class="line">    p, q &#x3D; getPrime(512), getPrime(512)</span><br><span class="line">    n &#x3D; p*q</span><br><span class="line">    e &#x3D; getPrime(32)</span><br><span class="line">    while(GCD((p-1)*(q-1),e)!&#x3D;1):</span><br><span class="line">        p, q &#x3D; getPrime(512), getPrime(512)</span><br><span class="line">        n &#x3D; p*q</span><br><span class="line">        e &#x3D; getPrime(32)</span><br><span class="line">    d &#x3D; inverse(e,(p-1)*(q-1))</span><br><span class="line">    return (e,n),(d,p,q)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    m &#x3D; bytes_to_long(flag)</span><br><span class="line">    publickey,secretkey &#x3D; init_key()</span><br><span class="line">    print(&quot;[+]&quot;,publickey)</span><br><span class="line">    print(&quot;[+]&quot;,pow(m,publickey[0],publickey[1]))</span><br><span class="line"></span><br><span class="line">    for _ in range(10000):</span><br><span class="line">        try:</span><br><span class="line">            c &#x3D; int(input(&quot;[-] &quot;))</span><br><span class="line">            m &#x3D; pow(c,secretkey[0],publickey[1])</span><br><span class="line">            msg &#x3D; int.to_bytes(m,1024&#x2F;&#x2F;8,&#39;big&#39;)</span><br><span class="line">            print(&quot;[+]&quot;,msg.startswith(b&quot;\x00&quot;))</span><br><span class="line">        except:</span><br><span class="line">            print(&quot;[!] ERROR!&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    if proof_of_work():</span><br><span class="line">        main()</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;[!] Wrong!&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以发现这个题过了工作证明之后提供了一个解密接口，可以进行选择密文攻击，那么我们就需要构造合适的密文来泄露信息。这里能泄露的信息只有最高8位是否为0。</p>
+<p>根据同态加密，我们可以知道，rsa密文进行乘法运算是同态的，所以这里可以用密文乘来对原明文进行操作。</p>
+<p>前八位是否为0等价于解密的文段m是否满足$m&gt;=2^{1024-8}=2^{1016}$​，通过这个点和乘法操作可以进行单调性分析,构造m=2**1016//x，然后应用二分查找查出x即可。</p>
+<p>上exp：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">&#x27;/home/zuni-w/Desktop/pyprocess.sh&#x27;</span> )</span><br><span class="line"></span><br><span class="line">q=process(<span class="string">&#x27;/home/zuni-w/Desktop/pysha.sh&#x27;</span> )</span><br><span class="line"></span><br><span class="line">s=p.recvuntil(<span class="string">&quot;XXX+&quot;</span>)</span><br><span class="line">s=p.recvuntil(<span class="string">&quot;)&quot;</span>)</span><br><span class="line">la=s[:-<span class="number">1</span>]</span><br><span class="line">s=p.recvuntil(<span class="string">&quot;==&quot;</span>)</span><br><span class="line"></span><br><span class="line">s=p.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">sha=s[<span class="number">1</span>:-<span class="number">1</span>]</span><br><span class="line">q.recvuntil(<span class="string">&quot;?:&quot;</span>)</span><br><span class="line">q.sendline(<span class="built_in">str</span>(la)[<span class="number">2</span>:-<span class="number">1</span>])</span><br><span class="line">q.recvuntil(<span class="string">&quot;ans:&quot;</span>)</span><br><span class="line">q.sendline(<span class="built_in">str</span>(sha)[<span class="number">2</span>:-<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">s=q.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">ans=s[:-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(ans[:-<span class="number">1</span>])</span><br><span class="line">q.close()</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(ans)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s=p.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">e,n =<span class="built_in">eval</span>(s[<span class="number">4</span>:])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s=p.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">c=<span class="built_in">eval</span>(s[<span class="number">4</span>:])</span><br><span class="line"></span><br><span class="line">f=<span class="literal">True</span></span><br><span class="line">i=-<span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> f:</span><br><span class="line">    i+=<span class="number">1</span></span><br><span class="line">    c1=powmod(<span class="number">2</span>**i,e,n)</span><br><span class="line">    c2=c*c1%n</span><br><span class="line">    p.recvuntil(<span class="string">&quot;[-]&quot;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(c2))</span><br><span class="line">    s=p.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    f=<span class="built_in">eval</span>(s[<span class="number">4</span>:])</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(i)</span><br><span class="line"></span><br><span class="line">r=<span class="number">2</span>**i</span><br><span class="line">l=<span class="number">2</span>**(i-<span class="number">1</span>)</span><br><span class="line"><span class="keyword">while</span> r&gt;l:</span><br><span class="line">    mid=(r+l+<span class="number">1</span>)//<span class="number">2</span></span><br><span class="line">    c1=powmod(mid,e,n)</span><br><span class="line">    c2=c*c1%n</span><br><span class="line">    p.recvuntil(<span class="string">&quot;[-]&quot;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(c2))</span><br><span class="line">    s=p.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    f=<span class="built_in">eval</span>(s[<span class="number">4</span>:])</span><br><span class="line">    <span class="keyword">if</span> f :</span><br><span class="line">        l=mid</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        r=mid-<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(mid,r==l)</span><br><span class="line">t=<span class="number">2</span>**<span class="number">1016</span>//r</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> *</span><br><span class="line"><span class="built_in">print</span>(unhexlify(<span class="built_in">hex</span>(t)[<span class="number">2</span>:]))</span><br></pre></td></tr></table></figure>
+
+<p>中间使用了已经写好的pow脚本，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha256</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> *</span><br><span class="line">s=<span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#x27;</span></span><br><span class="line">m0=<span class="built_in">input</span>(<span class="string">&#x27;XXX+?:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(m0)</span><br><span class="line">a=<span class="built_in">input</span>(<span class="string">&quot;ans:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">            <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">                t=s[i]+s[j]+s[k]+s[l]</span><br><span class="line">                m=t+m0</span><br><span class="line">                p=sha256()</span><br><span class="line">                p.update(m.encode(<span class="string">&quot;UTF-8&quot;</span>))</span><br><span class="line">                d=p.hexdigest()</span><br><span class="line">                <span class="keyword">if</span> a <span class="keyword">in</span> d:</span><br><span class="line">                    <span class="built_in">print</span>(t)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/08/11/AES-hamming/">AES-hamming</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
