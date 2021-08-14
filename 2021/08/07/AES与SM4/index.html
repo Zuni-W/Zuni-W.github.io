@@ -27,12 +27,20 @@
 <meta property="og:site_name" content="王某杂谈">
 <meta property="og:description" content="聊聊AES与SM4。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLJjT6XKsF0cIGl6EiaBlu9DxgHueBV6w6VhQbpJAEolv5NBJQ5XZiaD8plMf8Inn5rIZ0LAqzxBhvMA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPsu6mhZYOdodY3b8L0WgWGZCkJKcup2RuBaHbs2cZ7dSAwdJ4AUNlpw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPAdyOv5eiaFWHUWg5icynUHmBiccTzVDztZHDrFMdIWwicQHZfdZn0jELFA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaP5BwVDy1cDAb06gB5wCa4007mlWUqH151jesibTpta1vNZQ0gtnkcueQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPqbHTH8Ed1b9nQD0hKq6H8y2GPyIFcGDbfw6qMNhtmiaPVv47DWX10Sg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPYghSZ3CU28CrJVHfiayOxHCgQbicMpey6wpvib6XPQRo4ZaMIfqWia7N4A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPeOGh8EzgqHR5GTxS0MDjqvRXN1WlLAs2DHf4qbNtAwzKYafFbk1vqw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
 <meta property="article:published_time" content="2021-08-07T05:59:47.000Z">
-<meta property="article:modified_time" content="2021-08-08T10:37:50.793Z">
+<meta property="article:modified_time" content="2021-08-14T08:32:26.372Z">
 <meta property="article:author" content="Zuni">
 <meta property="article:tag" content="re">
 <meta property="article:tag" content="cry">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLJjT6XKsF0cIGl6EiaBlu9DxgHueBV6w6VhQbpJAEolv5NBJQ5XZiaD8plMf8Inn5rIZ0LAqzxBhvMA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
   
   
 
@@ -74,7 +82,7 @@
     
       
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%BB%86%E8%8A%82"><span class="toc-text">算法细节</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%AF%94%E8%BE%83"><span class="toc-text">基本比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%AF%B9%E6%AF%94"><span class="toc-text">操作对比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E8%B0%83%E5%BA%A6"><span class="toc-text">密钥调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%A7%A3%E5%AF%86%E6%B5%81%E7%A8%8B"><span class="toc-text">加解密流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E6%95%B0"><span class="toc-text">魔数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sbox"><span class="toc-text">Sbox</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBox%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="toc-text">SBox的数学原理</span></a></li></ol></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%BB%86%E8%8A%82"><span class="toc-text">算法细节</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%AF%94%E8%BE%83"><span class="toc-text">基本比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%AF%B9%E6%AF%94"><span class="toc-text">操作对比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E8%B0%83%E5%BA%A6"><span class="toc-text">密钥调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%A7%A3%E5%AF%86%E6%B5%81%E7%A8%8B"><span class="toc-text">加解密流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AD%94%E6%95%B0"><span class="toc-text">魔数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sbox"><span class="toc-text">Sbox</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SBox%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="toc-text">SBox的数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-text">多项式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GF-2-8"><span class="toc-text">$$GF(2^8)$$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%9F%BA%E4%B8%8E%E6%AD%A3%E8%A7%84%E5%9F%BA"><span class="toc-text">多项式基与正规基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sbox%E7%9A%84%E6%9E%84%E9%80%A0"><span class="toc-text">Sbox的构造</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%9F%E5%A4%8D%E5%90%88"><span class="toc-text">域复合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%82%E9%80%86"><span class="toc-text">求逆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E5%8F%98%E6%8D%A2"><span class="toc-text">基变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%BB%93%E8%AE%BA"><span class="toc-text">一些结论</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S%E7%9B%92%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2"><span class="toc-text">S盒的相互转换</span></a></li></ol></div></div></div>
 
     
   
@@ -187,7 +195,137 @@
 <p>0x0a,0xc1,0x31,0x88,0xa5,0xcd,0x7b,0xbd,0x2d,0x74,0xd0,0x12,0xb8,0xe5,0xb4,0xb0,</p>
 <p>0x89,0x69,0x97,0x4a,0x0c,0x96,0x77,0x7e,0x65,0xb9,0xf1,0x09,0xc5,0x6e,0xc6,0x84,</p>
 <p>0x18,0xf0,0x7d,0xec,0x3a,0xdc,0x4d,0x20,0x79,0xee,0x5f,0x3e,0xd7,0xcb,0x39,0x48}</p>
-<h2 id="SBox的数学原理"><a href="#SBox的数学原理" class="headerlink" title="SBox的数学原理"></a>SBox的数学原理</h2><p>Sbox是</p>
+<h2 id="SBox的数学原理"><a href="#SBox的数学原理" class="headerlink" title="SBox的数学原理"></a>SBox的数学原理</h2><p>Sbox几乎是对称密码里共有的唯一非线性元件，对加密的安全性定义起到核心作用。</p>
+<h4 id="多项式"><a href="#多项式" class="headerlink" title="多项式"></a>多项式</h4><p>抽出具体运算对象，用未定元占位进行运算。</p>
+<p>加法：同类项合并/不进位加法                                                                    —–》（构成群）</p>
+<p>乘法：柯西乘积                                                                                         ——–》（构成环） </p>
+<p>数乘：退化到度为0的乘法                                                                          ——》（向量空间）          </p>
+<p>除法：带余除法                                                                                           ——-》（有限域）</p>
+<h4 id="GF-2-8"><a href="#GF-2-8" class="headerlink" title="$$GF(2^8)$$"></a>$$GF(2^8)$$</h4><p>在多项式运算的基础上，将数域选为整数，引入2将每个系数限定在{0，1}域内，再引入一个8次不可约多项式作为模元得到$GF{(2^8)}$​。</p>
+<p>求模运算：若</p>
+<p>一些有趣的性质：</p>
+<ol>
+<li>加法与加法逆元是相同的。</li>
+<li>数乘进一步退化为保持或归零两种操作，可部署进电路。</li>
+<li>不可约多项式作为模元，域内每一个元素都可以作为原根。</li>
+</ol>
+<h4 id="多项式基与正规基"><a href="#多项式基与正规基" class="headerlink" title="多项式基与正规基"></a>多项式基与正规基</h4><p>多项式基是${x^{n-1},\cdots,x,1}$，其中x为占位未定元。</p>
+<p>取A=0b10，则$GF(2^8)$​的多项式基即为${A^7,A^6,A^5,A^4,A^3,A^2,A^1,1}$</p>
+<h6 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h6><ol>
+<li>加法及逆元等价于按位异或。</li>
+<li>单项式乘法等价于移位。</li>
+<li>对于乘方运算实现较为困难。</li>
+</ol>
+<p>正规基${Y^{p^{n-1}},\cdots,Y^{p^1},Y}$,其中p是GF（p）所对应的阶数。</p>
+<h6 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h6><ol>
+<li>$Y^{p^{n}-1}=1,Y^{p^n}=Y$。</li>
+<li>正规基使用了多项式的全部根，不含有元素1</li>
+<li>扩域上乘方运算等价于换位。</li>
+<li>乘法运算较为方便。</li>
+</ol>
+<h2 id="Sbox的构造"><a href="#Sbox的构造" class="headerlink" title="Sbox的构造"></a>Sbox的构造</h2><p>AES和SM4的构造虽然有较大的具体差异，但都是线性运算和求逆运算的结合，其中求逆运算是核心功能。</p>
+<p>求逆可以转化为在对应域上的幂运算，但直接在$GF(2^8)$上的运算很麻烦，而另一方面，二次扩域的求逆较为简单，所以我们可以把他转化为多个二次扩域的复合进行计算。</p>
+<h4 id="域复合"><a href="#域复合" class="headerlink" title="域复合"></a>域复合</h4><p>在$GF(p^n)$的空间里寻求一个gcd(r,n)!=1，使得$GF(p^r)$是原空间的一个子空间，则按照子空间进行划分，我们就能划分出商空间$GF(p^n/p^r)$使得$x^r$为最小未定元单位。 </p>
+<p>使用分治，我们可以通过两次划分获得$GF(2^8)$​​与$GF(2^2)$​​​产生同构，即$GF(2^8/2^4),GF(2^4/2^2)$​​​，在这几组子域的二次扩域均为两组基。</p>
+<h4 id="求逆"><a href="#求逆" class="headerlink" title="求逆"></a>求逆</h4><p>由于求逆主要涉及幂运算，在正规基下乘法运算特别是幂运算更加方便，所以取正规基下的求逆过程。</p>
+<p>模元r我们可以表示为$r(y)=y^2+by+c=(y+Y^{p^r})(y+Y)$​,即$b=Y^{p^r}+Y$​,  $c=Y^{p^r}\cdot Y$​</p>
+<p>我们可以取任意元素g，使得$g={g_1Y^{p^r}+g_0Y}$,那么其逆元$d={d_1Y^{p^r}+d_0Y}$满足</p>
+<p>$gd=g_1d_1(Y^{p^r})^2+(g_1d_0+g_0d_1)Y^{p^r}Y+d_0d_1Y^2$</p>
+<p>​     $=g_1d_1(bY^{p^r}+c)+(g_1d_0+g_0d_1)c+g_0d_0(bY+c)$</p>
+<p>​     $=(g_1d_1bY^{p^r}+g_0d_0bY)+[g_1d_1c+(g_1d_0+g_0d_1)c+g_0d_0c]$​​ </p>
+<p>​     $=(g_1d_1bY^{p^r}+g_0d_0bY)+[(g_1+g_0)(d_1+d_0)c]b^{-1}(Y^{p^r}+Y)$ </p>
+<p>​     $=[g_1d_1b+(g_1+g_0)(d_1+d_0)cb^{-1}]Y^{p^r}+[g_0d_0b+(g_1+g_0)(d_1+d_0)cb^{-1}]Y)$​​      </p>
+<p>=1 $=b^{-1}(Y^{p^r}+Y)$​​</p>
+<p>得</p>
+<p>$b^{-1}=g_1d_1b+(g_1+g_0)(d_1+d_0)cb^{-1}$​</p>
+<p>$b^{-1}=g_0d_0b+(g_1+g_0)(d_1+d_0)cb^{-1}$​​</p>
+<p>相加有</p>
+<p>$g_0d_0+g_1d_1=0$，即$g_0d_0=g_1d_1$</p>
+<p>乘b得</p>
+<p>$1=b^2g_0d_0+(g_1d_0+g_0d_1)c$​​</p>
+<p>乘$g_1$得</p>
+<p>$g_1=g_0g_1d_0b^2+(g_1^2d_0+g_0g_1d_1)c$​​</p>
+<p>​     $=g_0g_1d_0b^2+(g_1^2d_0+g_0^2d_0)c$​</p>
+<p>​    $=[g_0g_1b^2+(g_1^2+g_0^2)c]d_0$​</p>
+<p>即</p>
+<p>$d_0=[g_0g_1b^2+(g_1^2+g_0^2)c]^{-1}g_1$</p>
+<p>$d_1=[g_0g_1b^2+(g_1^2+g_0^2)c]^{-1}g_0$</p>
+<p>至此便求出了逆元的表达式。</p>
+<p>而在$GF(2^2 )$​​上</p>
+<p>r(y)有且仅有$r(y)=y^2+y+1$,即b=c=1</p>
+<p>在这里有$g_i^n=g_i$​​​​​</p>
+<p>则</p>
+<p>$d_0=[g_0g_1+(g_1^2+g_0^2)]^{-1}g_1$​​</p>
+<p>​     $=[g_0g_1+(g_1^2+g_0^2)]g_1$</p>
+<p>​     $=g_0g_1^2+g_1^3+g_0^2g_1$</p>
+<p>​     $=g_0g_1+g_1+g_0g_1$</p>
+<p>​     $=g_1$​</p>
+<p>同理</p>
+<p>$d_1=g_0$</p>
+<p>这样就完成了递归求逆。</p>
+<h4 id="基变换"><a href="#基变换" class="headerlink" title="基变换"></a>基变换</h4><p>在应用中，b常取1，C取前一组基。</p>
+<p>通过三次扩域计算根据模元将原式转换为3个两组基，再对应相乘即可得到八组基，与原式一一对应。</p>
+<p>即</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLJjT6XKsF0cIGl6EiaBlu9DxgHueBV6w6VhQbpJAEolv5NBJQ5XZiaD8plMf8Inn5rIZ0LAqzxBhvMA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p>通过以上过程求出y,z,w三组基变换矩阵和逆变换矩阵。与对应的矩阵乘起来即可。</p>
+<h4 id="一些结论"><a href="#一些结论" class="headerlink" title="一些结论"></a>一些结论</h4><h6 id="对于AES："><a href="#对于AES：" class="headerlink" title="对于AES："></a>对于AES：</h6><ol>
+<li>其生成表达式为$S_{AES}(x)=Ax^{-1}+0x63$​</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPsu6mhZYOdodY3b8L0WgWGZCkJKcup2RuBaHbs2cZ7dSAwdJ4AUNlpw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<ol start="2">
+<li>多项式基在复合域下的表示如下：</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPAdyOv5eiaFWHUWg5icynUHmBiccTzVDztZHDrFMdIWwicQHZfdZn0jELFA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<ol start="3">
+<li>复合域基在多项式基下的表示如下：</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaP5BwVDy1cDAb06gB5wCa4007mlWUqH151jesibTpta1vNZQ0gtnkcueQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<h6 id="对于SM4："><a href="#对于SM4：" class="headerlink" title="对于SM4："></a>对于SM4：</h6><ol>
+<li><p>生成表达式为：$S_{SM4}(x)=A(Ax+c)^{-1}+c, c=0xd3$</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPqbHTH8Ed1b9nQD0hKq6H8y2GPyIFcGDbfw6qMNhtmiaPVv47DWX10Sg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+</li>
+<li><p>多项式基在复合域下的表示如下：</p>
+</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPYghSZ3CU28CrJVHfiayOxHCgQbicMpey6wpvib6XPQRo4ZaMIfqWia7N4A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<ol start="3">
+<li>复合域基下多项式基的表示如下：<br>$$<br>\left(<pre><code>\begin&#123;matrix&#125;
+b_7\\b_6\\b_5\\b_4\\b_3\\b_2\\b_1\\b_0
+\end&#123;matrix&#125;
+</code></pre>
+\right)<br>=\left(<pre><code>\begin&#123;matrix&#125;
+0&amp;1&amp;1&amp;0&amp;1&amp;1&amp;1&amp;1\\
+0&amp;1&amp;0&amp;1&amp;0&amp;0&amp;0&amp;1\\
+1&amp;0&amp;0&amp;0&amp;0&amp;1&amp;1&amp;1\\
+0&amp;1&amp;0&amp;0&amp;0&amp;1&amp;1&amp;1\\
+0&amp;0&amp;0&amp;1&amp;1&amp;1&amp;0&amp;1\\
+0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;1\\
+0&amp;1&amp;0&amp;1&amp;1&amp;0&amp;0&amp;1\\
+1&amp;1&amp;1&amp;0&amp;0&amp;1&amp;0&amp;1
+\end&#123;matrix&#125;
+</code></pre>
+\right)<br>\cdot\left(<pre><code>\begin&#123;matrix&#125;
+g_7\\g_6\\g_5\\g_4\\g_3\\g_2\\g_1\\g_0
+\end&#123;matrix&#125;
+</code></pre>
+\right)<br>$$</li>
+</ol>
+<h2 id="S盒的相互转换"><a href="#S盒的相互转换" class="headerlink" title="S盒的相互转换"></a>S盒的相互转换</h2><p>我们已知</p>
+<p>$S_a(x)=A_ax^{-1}+C_a$</p>
+<p>$S_s(x)=A_s(A_sx+C_s)^{-1}+C_s$</p>
+<p>又知在正规基下，求逆的算法是一致的，我们取求逆运算为$f_n(x)$,其中n代表正规基下的运算。</p>
+<p>我们用$P_a,P_s$分别指代AES和SM4的正规基转多项式基的基变换矩阵。</p>
+<p>则有</p>
+<p>$A_a^{-1}(S_a(x)+C_a)=x^{-1}=P_af_n(P_a^{-1}x)$</p>
+<p>用$P_ax$代入x得</p>
+<p>$f_n(x)=P_a^{-1}A_a^{-1}(S_a(P_ax)+C_a)=P_a^{-1}A_a^{-1}S_a(P_ax)+P_a^{-1}A_a^{-1}C_a$</p>
+<p>而</p>
+<p>$S_s(x)=A_sP_sf_n(P_s^{-1}(A_sx+C_s))+C_s$</p>
+<p>​           $=A_sP_sP_a^{-1}A_a^{-1}S_a(P_aP_s^{-1}(A_sx+C_s))+A_sP_sP_a^{-1}A_a^{-1}C_a+C_s$</p>
+<p>取$Ss(x)=L(Sa(Mx+T))+C$</p>
+<p>则有<br>$$<br>\left{<br>    \begin{array}{llll}<br>    L=A_sP_sP_a^{-1}A_a^{-1} \<br>    M=P_aP_s^{-1}A_s\<br>    T=P_aP_s^{-1}C_s\<br>    C=A_sP_sP_a^{-1}A_a^{-1}C_a+C_s<br>    \end{array}<br>\right.<br>$$<br>即</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://mmbiz.qpic.cn/mmbiz_png/eEicdLAdfSLIzfbqwpY63pMaicAOk8YbaPeOGh8EzgqHR5GTxS0MDjqvRXN1WlLAs2DHf4qbNtAwzKYafFbk1vqw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p>如上，便可在支持AES的芯片内运行SM4的S盒。</p>
 
 
 <div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
