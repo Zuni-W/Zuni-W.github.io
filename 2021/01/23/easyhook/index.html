@@ -20,18 +20,18 @@
   <title>easyhook - 王某杂谈</title>
 
   
-    <meta name="description" content="HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底） 遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣 12key &#x3D; (char *)crypto - (ch">
+    <meta name="description" content="HOOK技术 hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底） 遇事不决，动态调试！ 这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣 12key &#x3D; (char *)crypt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="easyhook">
 <meta property="og:url" content="http://example.com/2021/01/23/easyhook/index.html">
 <meta property="og:site_name" content="王某杂谈">
-<meta property="og:description" content="HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底） 遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣 12key &#x3D; (char *)crypto - (ch">
+<meta property="og:description" content="HOOK技术 hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底） 遇事不决，动态调试！ 这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣 12key &#x3D; (char *)crypt">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-23T12:02:53.000Z">
 <meta property="article:modified_time" content="2021-05-10T12:03:25.210Z">
 <meta property="article:author" content="Zuni">
-<meta property="article:tag" content="re">
 <meta property="article:tag" content="AD">
+<meta property="article:tag" content="re">
 <meta name="twitter:card" content="summary">
   
   
@@ -74,7 +74,7 @@
     
       
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HOOK%E6%8A%80%E6%9C%AF"><span class="toc-text">HOOK技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%87%E4%BA%8B%E4%B8%8D%E5%86%B3%EF%BC%8C%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%EF%BC%81"><span class="toc-text">遇事不决，动态调试！</span></a></li></ol></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#hook%E6%8A%80%E6%9C%AF"><span class="toc-text">HOOK技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%87%E4%BA%8B%E4%B8%8D%E5%86%B3%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-text">遇事不决，动态调试！</span></a></li></ol></div></div></div>
 
     
   
@@ -106,14 +106,14 @@
 
 <article class='content md post'>
 <h1 class="article-title"><span>easyhook</span></h1>
-<h2 id="HOOK技术"><a href="#HOOK技术" class="headerlink" title="HOOK技术"></a>HOOK技术</h2><p>hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）</p>
-<h2 id="遇事不决，动态调试！"><a href="#遇事不决，动态调试！" class="headerlink" title="遇事不决，动态调试！"></a>遇事不决，动态调试！</h2><p>这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。</p>
+<h2 id="hook技术">HOOK技术</h2>
+<p>hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）</p>
+<h2 id="遇事不决动态调试">遇事不决，动态调试！</h2>
+<p>这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。</p>
 <p>另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key &#x3D; (char *)crypto - (char *)lpAddress - 5;</span><br><span class="line">return sub_4010D0();</span><br></pre></td></tr></table></figure>
-
 <p>这一句对应的反汇编是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.text:004011FC lea     eax, crypto</span><br><span class="line">.text:00401202 mov     ebx, lpAddress</span><br><span class="line">.text:00401208 sub     eax, ebx</span><br><span class="line">.text:0040120A sub     eax, 5</span><br><span class="line">.text:0040120D mov     key, eax</span><br><span class="line">.text:00401212 call    sub_4010D0</span><br><span class="line">.text:00401217 pop     edi</span><br><span class="line">.text:00401218 pop     esi</span><br><span class="line">.text:00401219 pop     ebx</span><br><span class="line">.text:0040121A retn</span><br></pre></td></tr></table></figure>
-
 <p>估测是将函数放在了返回寄存器里，然后再通过函数回退去调用，不过具体细节还需要考证。</p>
 
 
@@ -133,7 +133,7 @@
 
       
 <footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

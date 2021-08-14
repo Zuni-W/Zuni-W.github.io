@@ -143,10 +143,12 @@
 </h2>
 <div class='excerpt'>
   
-    <p>HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）
-遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。
+    <p>HOOK技术
+hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）
+遇事不决，动态调试！
+这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。
 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣
-12key &#x3D; (char *)crypto - ...</p>
+12key &#x3D; (char *)cr...</p>
   
 </div>
 <div class='meta cap'>
@@ -163,7 +165,8 @@
 </h2>
 <div class='excerpt'>
   
-    <p>动态调试看地图！！！！一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。
+    <p>动态调试看地图！！！！
+一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。
 </p>
   
 </div>
@@ -182,13 +185,14 @@
 <div class='excerpt'>
   
     <p>burpsuite 代理配置
-在internet中打开internet选项卡，调整LAN代理。
 
+在internet中打开internet选项卡，调整LAN代理。
 安装burp的证书
 
-
-代理抓包打开代理的拦截抓包选项，在http代理选项中可以通过默认浏览器打开。
-重发器是个好东西</p>
+代理抓包
+打开代理的拦截抓包选项，在http代理选项中可以通过默认浏览器打开。
+重发器是个好东西
+</p>
   
 </div>
 <div class='meta cap'>
@@ -205,10 +209,11 @@
 </h2>
 <div class='excerpt'>
   
-    <p>靶场random WP怎么突然想起来写这个题了呢，因为人肉计算机。
+    <p>靶场random WP
+怎么突然想起来写这个题了呢，因为人肉计算机。
 没错，random那个题我也是人肉跑出来的。虽然我试过修改种子再生成随机数，但似乎效果并不好。于是鉴于每个数都在1~6之间，就用人工的方案了。方案跟那个comb题差不多，本地跑出来数据之后再用pwntool上传就可以了。
-AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一遍。
-确定偏...</p>
+AD guess_num WP
+这两个其实是同一个题，但是这次本着按溢出的方式做的原则重构了一...</p>
   
 </div>
 <div class='meta cap'>
@@ -225,7 +230,8 @@ AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的�
 </h2>
 <div class='excerpt'>
   
-    <p>cgpwn2 WP这题本身没啥好说的，主要是不要被大大的pwn迷惑了，实际使用的是_system函数另外，暂时未知替换return后为什么要先填充一个空字再填入commend参数地址，需要继续去读函数在栈上的具体模式，懂了再回来更。
+    <p>cgpwn2 WP
+这题本身没啥好说的，主要是不要被大大的pwn迷惑了，实际使用的是_system函数 另外，暂时未知替换return后为什么要先填充一个空字再填入commend参数地址，需要继续去读函数在栈上的具体模式，懂了再回来更。
 半懂了，这个地方的空字是函数的返回值，但具体在栈上的实现下周再更吧。
 另外，做这个题途中配置了vim的pwn相关代码复用，也算是有点收获
 </p>
@@ -245,20 +251,19 @@ AD guess_num WP这两个其实是同一个题，但是这次本着按溢出的�
 </h2>
 <div class='excerpt'>
   
-    <p>AD string WP这个题戏好多啊
+    <p>AD string WP
+这个题戏好多啊
 总而言之，终于摸到了格式化字符串漏洞的大门！
 具体步骤
+
 checksec发现地址是动态的，die查壳发现是64位
-
 运行一下全是字，然后发现诶，有secret,看来是好东西（当时应该想到是地址的）。
-
 打开发现居然有secret地址输出诶！（当时应该想到是格式化字符串的）
-
 
 4.然后读流程，基本上就是文字游戏，注意两点：
 
 
-游戏中间有个printf...</p>
+游...</p>
   
 </div>
 <div class='meta cap'>
@@ -275,9 +280,11 @@ checksec发现地址是动态的，die查壳发现是64位
 </h2>
 <div class='excerpt'>
   
-    <p>“万物皆可溢出”1.通过某个变量溢出获取值来控制流程
+    <p>“万物皆可溢出”
+1.通过某个变量溢出获取值来控制流程
 2.通过程序段溢出修改流程
-具体流程1.查函数列表看到后门函数地址
+具体流程
+1.查函数列表看到后门函数地址
 2.注意到这里的字符串函数只有strcpy，而调用的触发条件是用字符串长度赋值的int8变量大于3小于8
 3.注意字越短越容易溢出，遂用长度溢出覆盖
 </p>
@@ -297,9 +304,10 @@ checksec发现地址是动态的，die查壳发现是64位
 </h2>
 <div class='excerpt'>
   
-    <p>Hello, CTF注意sprintf函数的用法sprintf(&amp;s,format_string,p1,p2…)将按照format_string，并填入参数pn得到的字符串输入s备注：sprintf用法总结https://baike.baidu.com/item/sprintf/9703430?fr=aladdin
-maze注意左右上下移动对应的操作数，以及x轴与y轴对应的前后
-cs...</p>
+    <p>Hello, CTF
+注意sprintf函数的用法 sprintf(&amp;s,format_string,p1,p2...) 将按照format_string，并填入参数pn得到的字符串输入s 备注：sprintf用法总结https://baike.baidu.com/item/sprintf/9703430?fr=aladdin
+maze
+注意左右上下移动对应的操作数，以及x轴与...</p>
   
 </div>
 <div class='meta cap'>
@@ -317,12 +325,12 @@ cs...</p>
 <div class='excerpt'>
   
     <p>摸鱼文重写了。
-一、无法反汇编怎么办本题的主函数在不经过处理的情况下没有办法反汇编，解决途径有二：
+一、无法反汇编怎么办
+本题的主函数在不经过处理的情况下没有办法反汇编，解决途径有二：
 1. 将函数体选中，直接转化为函数
 
 2. 在函数体最后sp堆栈不平衡的位置把多余的代码行去掉
-
-这种情况基本是函数内部的函数调用有问题, 某个函数的函数声明有问题. 此时选项-&gt;general-&gt;disassembly-&gt;Display disassembly line p...</p>
+这种情况基本是函数内部的函数调用有问题, 某个函数的函数声明有问题. 此时选项-&gt;general-&gt;disassembly-&gt;Display disassembly ...</p>
   
 </div>
 <div class='meta cap'>
@@ -373,7 +381,7 @@ cs...</p>
 
       
 <footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

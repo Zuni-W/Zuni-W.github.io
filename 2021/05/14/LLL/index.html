@@ -20,12 +20,12 @@
   <title>红帽密码 - 王某杂谈</title>
 
   
-    <meta name="description" content="这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。 赛中注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。 复现关于格密码orz算了我不知道我懂不懂。 LLL算法个人理解，对于$(\textbf{b}_1,\textbf{b}_2,…,\textbf{b}_n)^T$这几组基，通过辗转相减规约化，得到一组">
+    <meta name="description" content="这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。 赛中 注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。 复现 关于格密码 orz算了我不知道我懂不懂。 LLL算法 个人理解，对于\((\textbf{b}_1,\textbf{b}_2,...,\textbf{b}_n)^T\)这几组基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="红帽密码">
 <meta property="og:url" content="http://example.com/2021/05/14/LLL/index.html">
 <meta property="og:site_name" content="王某杂谈">
-<meta property="og:description" content="这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。 赛中注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。 复现关于格密码orz算了我不知道我懂不懂。 LLL算法个人理解，对于$(\textbf{b}_1,\textbf{b}_2,…,\textbf{b}_n)^T$这几组基，通过辗转相减规约化，得到一组">
+<meta property="og:description" content="这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。 赛中 注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。 复现 关于格密码 orz算了我不知道我懂不懂。 LLL算法 个人理解，对于\((\textbf{b}_1,\textbf{b}_2,...,\textbf{b}_n)^T\)这几组基">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-14T00:27:17.000Z">
 <meta property="article:modified_time" content="2021-05-19T06:44:22.472Z">
@@ -74,7 +74,7 @@
     
       
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%9B%E4%B8%AD"><span class="toc-text">赛中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-text">复现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%BC%E5%AF%86%E7%A0%81"><span class="toc-text">关于格密码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#LLL%E7%AE%97%E6%B3%95"><span class="toc-text">LLL算法</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%9B%E4%B8%AD"><span class="toc-text">赛中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-text">复现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%BC%E5%AF%86%E7%A0%81"><span class="toc-text">关于格密码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lll%E7%AE%97%E6%B3%95"><span class="toc-text">LLL算法</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div>
 
     
   
@@ -107,18 +107,20 @@
 <article class='content md post'>
 <h1 class="article-title"><span>红帽密码</span></h1>
 <span id="more"></span>
-
 <p>这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。</p>
-<h2 id="赛中"><a href="#赛中" class="headerlink" title="赛中"></a>赛中</h2><p>注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。</p>
-<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><h5 id="关于格密码"><a href="#关于格密码" class="headerlink" title="关于格密码"></a>关于格密码</h5><p>orz算了我不知道我懂不懂。</p>
-<h5 id="LLL算法"><a href="#LLL算法" class="headerlink" title="LLL算法"></a>LLL算法</h5><p>个人理解，对于$(\textbf{b}_1,\textbf{b}_2,…,\textbf{b}_n)^T$这几组基，通过辗转相减规约化，得到一组满足以下两个条件的新的基：</p>
-<ol>
+<h2 id="赛中">赛中</h2>
+<p>注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。</p>
+<h2 id="复现">复现</h2>
+<h5 id="关于格密码">关于格密码</h5>
+<p>orz算了我不知道我懂不懂。</p>
+<h5 id="lll算法">LLL算法</h5>
+<p>个人理解，对于<span class="math inline">\((\textbf{b}_1,\textbf{b}_2,...,\textbf{b}_n)^T\)</span>这几组基，通过辗转相减规约化，得到一组满足以下两个条件的新的基：</p>
+<ol type="1">
 <li>后边的每个基都比前一个基长度小（但不会小太多）</li>
-<li>接受为正交的误差范围在$\frac{1}{2}$内（存疑）</li>
+<li>接受为正交的误差范围在<span class="math inline">\(\frac{1}{2}\)</span>内（存疑）</li>
 </ol>
 <p>通过这种方式便可以找出一组能在相对可接受范围内与待求向量（往往是最短向量）吻合的向量。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">import math </span><br><span class="line">from decimal import *</span><br><span class="line">import random</span><br><span class="line">import struct</span><br><span class="line"></span><br><span class="line">getcontext().prec &#x3D; int(100)</span><br><span class="line"></span><br><span class="line">primes &#x3D; [2]</span><br><span class="line">for i in range(3, 100):</span><br><span class="line">    f &#x3D; True</span><br><span class="line">    for j in primes:</span><br><span class="line">        if i * i &lt; j:</span><br><span class="line">            break</span><br><span class="line">        if i % j &#x3D;&#x3D; 0:</span><br><span class="line">            f &#x3D; False</span><br><span class="line">            break</span><br><span class="line">    if f:</span><br><span class="line">        primes.append(i)</span><br><span class="line"></span><br><span class="line">keys &#x3D; []</span><br><span class="line">for i in range(len(primes)):</span><br><span class="line">    keys.append(Decimal(int(primes[i])).ln())</span><br><span class="line"></span><br><span class="line">arr &#x3D; []</span><br><span class="line">for v in keys:</span><br><span class="line">    arr.append(int(v * int(16) ** int(64)))</span><br><span class="line"></span><br><span class="line">ct &#x3D; 737384863737803670841307970259513146291422299366557325168325233349136771464845311</span><br><span class="line"></span><br><span class="line">def encrypt(res):</span><br><span class="line">    h &#x3D; Decimal(int(0))</span><br><span class="line">    for i in range(len(keys)):</span><br><span class="line">        h +&#x3D; res[i] * keys[i]</span><br><span class="line"></span><br><span class="line">    ct &#x3D; int(h * int(16)**int(64))</span><br><span class="line">    return ct</span><br><span class="line"></span><br><span class="line">def f(N):</span><br><span class="line">    ln &#x3D; len(arr)</span><br><span class="line">    A &#x3D; Matrix(ZZ, ln + 1, ln + 1)</span><br><span class="line">    for i in range(ln):</span><br><span class="line">        A[i, i] &#x3D; 1</span><br><span class="line">        A[i, ln] &#x3D; arr[i] &#x2F;&#x2F; N</span><br><span class="line">        A[ln, i] &#x3D; 64</span><br><span class="line"></span><br><span class="line">    A[ln, ln] &#x3D; ct &#x2F;&#x2F; N</span><br><span class="line"></span><br><span class="line">    res &#x3D; A.LLL()</span><br><span class="line"></span><br><span class="line">    for i in range(ln + 1):</span><br><span class="line">        flag &#x3D; True</span><br><span class="line">        for j in range(ln):</span><br><span class="line">            if -64 &lt;&#x3D; res[i][j] &lt; 64:</span><br><span class="line">                continue</span><br><span class="line">            flag &#x3D; False</span><br><span class="line">            break</span><br><span class="line">        if flag:</span><br><span class="line">            vec &#x3D; [int(v + 64) for v in res[i][:-1]]</span><br><span class="line">            ret &#x3D; encrypt(vec)</span><br><span class="line">            if ret &#x3D;&#x3D; ct:</span><br><span class="line">                print(N, bytes(vec))</span><br><span class="line">            else:</span><br><span class="line">                print(&quot;NO&quot;, ret, bytes(vec))</span><br><span class="line"></span><br><span class="line">for i in range(2, 10000):</span><br><span class="line">    print(i)</span><br><span class="line">    f(i)</span><br></pre></td></tr></table></figure>
-
 
 
 <div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
@@ -137,7 +139,7 @@
 
       
 <footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

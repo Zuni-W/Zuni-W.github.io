@@ -30,8 +30,8 @@
 <meta property="article:published_time" content="2021-02-08T12:13:48.000Z">
 <meta property="article:modified_time" content="2021-04-29T12:24:23.022Z">
 <meta property="article:author" content="Zuni">
-<meta property="article:tag" content="blog">
 <meta property="article:tag" content="re">
+<meta property="article:tag" content="blog">
 <meta name="twitter:card" content="summary">
   
   
@@ -74,7 +74,7 @@
     
       
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ollvm%E6%B7%B7%E6%B7%86"><span class="toc-text">ollvm混淆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HWS-re-obfu-WP"><span class="toc-text">HWS re obfu WP</span></a></li></ol></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ollvm%E6%B7%B7%E6%B7%86"><span class="toc-text">ollvm混淆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hws-re-obfu-wp"><span class="toc-text">HWS re obfu WP</span></a></li></ol></div></div></div>
 
     
   
@@ -108,12 +108,11 @@
 <h1 class="article-title"><span>obfu</span></h1>
 <p>旧文转载</p>
 <span id="more"></span>
-
-
-
-<h2 id="ollvm混淆"><a href="#ollvm混淆" class="headerlink" title="ollvm混淆"></a>ollvm混淆</h2><p>通过增加永不可达的分支（虚假控制流），将顺序流程转为switch流程使得框图扁平（平坦化），不说人话（指令替换）混淆（obfuscate）程序。</p>
+<h2 id="ollvm混淆">ollvm混淆</h2>
+<p>通过增加永不可达的分支（虚假控制流），将顺序流程转为switch流程使得框图扁平（平坦化），不说人话（指令替换）混淆（obfuscate）程序。</p>
 <p>可以在ida7.1+中通过<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6749">microcode修改流程移除混淆</a>。</p>
-<h2 id="HWS-re-obfu-WP"><a href="#HWS-re-obfu-WP" class="headerlink" title="HWS re obfu WP"></a>HWS re obfu WP</h2><p>后边就是个自动解码机了，所以逆向重点在前边。</p>
+<h2 id="hws-re-obfu-wp">HWS re obfu WP</h2>
+<p>后边就是个自动解码机了，所以逆向重点在前边。</p>
 <p>先看比较函数，发现一个是通过函数生成的，另一个是对输入加密，先把前者调出来。</p>
 <p>然后去看加密函数，发现第一步是将输入的16进制字符串改为真16进制串然后进行循环位移，跟一个奇怪的字符串求xor，再进行加密。</p>
 <p>遂调出来xor数组（这里有坑是读到0就终止，所以并不能通过 n xor 0 = n 这个方式直接调出数组）。</p>
@@ -139,7 +138,7 @@
 
       
 <footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

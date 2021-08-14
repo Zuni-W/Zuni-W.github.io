@@ -213,9 +213,10 @@
 </h2>
 <div class='excerpt'>
   
-    <p>AD babyre WP这个题，是对函数体本身进行了加密。由于这里的加密比较简单，直接利用idapython在源数据上打patch（或者）复现对函数体的解密，然后分析主体函数就好了。
+    <p>AD babyre WP
+这个题，是对函数体本身进行了加密。由于这里的加密比较简单，直接利用idapython在源数据上打patch（或者）复现对函数体的解密，然后分析主体函数就好了。
 附idapython文档
-附
+附 
 </p>
   
 </div>
@@ -233,10 +234,12 @@
 </h2>
 <div class='excerpt'>
   
-    <p>HOOK技术hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）
-遇事不决，动态调试！这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。
+    <p>HOOK技术
+hook是一种windows下调用信息队列的机制（也就是记录交互和改变运行基底）
+遇事不决，动态调试！
+这个题动态调试动起来就会发现，最后的check函数是假的。然后通过流程二分定区间，最后可以锁定主体函数，是一个非常简单的加密，然后python脚本逆回去就好。
 另外本题也要求了解一些内核机制，而且反编译中还有一句很有趣
-12key &#x3D; (char *)crypto - ...</p>
+12key &#x3D; (char *)cr...</p>
   
 </div>
 <div class='meta cap'>
@@ -253,7 +256,8 @@
 </h2>
 <div class='excerpt'>
   
-    <p>动态调试看地图！！！！一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。
+    <p>动态调试看地图！！！！
+一个值得注意的点是，如果直接将地图以二维表格的方式绘制，可能会出现Dword一次赋值两位的问题。
 </p>
   
 </div>
@@ -272,12 +276,12 @@
 <div class='excerpt'>
   
     <p>摸鱼文重写了。
-一、无法反汇编怎么办本题的主函数在不经过处理的情况下没有办法反汇编，解决途径有二：
+一、无法反汇编怎么办
+本题的主函数在不经过处理的情况下没有办法反汇编，解决途径有二：
 1. 将函数体选中，直接转化为函数
 
 2. 在函数体最后sp堆栈不平衡的位置把多余的代码行去掉
-
-这种情况基本是函数内部的函数调用有问题, 某个函数的函数声明有问题. 此时选项-&gt;general-&gt;disassembly-&gt;Display disassembly line p...</p>
+这种情况基本是函数内部的函数调用有问题, 某个函数的函数声明有问题. 此时选项-&gt;general-&gt;disassembly-&gt;Display disassembly ...</p>
   
 </div>
 <div class='meta cap'>
@@ -318,7 +322,7 @@
 
       
 <footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="http://example.com/">@Zuni</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>
