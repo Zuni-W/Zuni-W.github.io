@@ -84,7 +84,7 @@
     
       
       
-<div class="widget-wrap" id="recent"><div class="widget-header h4 dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="/atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="post-title reveal"><div class="cap"><time>2021-08-14</time></div><a href="/2021/08/07/AES%E4%B8%8ESM4/">AES与SM4</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-11</time></div><a href="/2021/08/11/AES-hamming/">AES-hamming</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-11</time></div><a href="/2021/08/11/DC/">差分攻击Grain论文复现</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-11</time></div><a href="/2021/08/11/xman-crypto/">xman-crypto</a></div><div class="post-title reveal"><div class="cap"><time>2021-07-21</time></div><a href="/2021/07/21/microcorruption/">microcorruption</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header h4 dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="/atom.xml"><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8938"><path d="M800.966 947.251c0-404.522-320.872-732.448-716.69-732.448V62.785c477.972 0 865.44 395.987 865.44 884.466h-148.75z m-162.273 0h-148.74c0-228.98-181.628-414.598-405.678-414.598v-152.01c306.205 0 554.418 253.68 554.418 566.608z m-446.24-221.12c59.748 0 108.189 49.503 108.189 110.557 0 61.063-48.44 110.563-108.188 110.563-59.747 0-108.18-49.5-108.18-110.563 0-61.054 48.433-110.556 108.18-110.556z" p-id="8939"></path></svg></a></div><div class="widget-body fs14"><div class="post-title reveal"><div class="cap"><time>2021-08-20</time></div><a href="/2021/08/19/hillstone-crypto/">hillstone-crypto</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-14</time></div><a href="/2021/08/07/AES%E4%B8%8ESM4/">AES与SM4</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-11</time></div><a href="/2021/08/11/AES-hamming/">AES-hamming</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-11</time></div><a href="/2021/08/11/DC/">差分攻击Grain论文复现</a></div><div class="post-title reveal"><div class="cap"><time>2021-08-11</time></div><a href="/2021/08/11/xman-crypto/">xman-crypto</a></div></div></div>
 
     
   
@@ -136,7 +136,32 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post article" href="/2021/05/12/vegenere/"><article class="excerpt md">
+  <div class="post-list post"><a class="post-card post article" href="/2021/05/14/LLL/"><article class="excerpt md">
+
+<h2 class="post-title">
+  红帽密码
+</h2>
+<div class='excerpt'>
+  
+    <p>
+这个题也是赛中找到了接近正解的攻击方案但没有想到优化精度的模式。
+赛中
+注意到题目本质是素因数分解但有精度丢失导致的不确定度，所以想的爆破尾位，但发现精度损失过大，爆破复杂度太高，所以就没有继续做。
+复现
+关于格密码
+orz算了我不知道我懂不懂。
+LLL算法
+个人理解，对于\((\textbf{b}_1,\textbf{b}_2,...,\textbf{b}_n)^T\)这...</p>
+  
+</div>
+<div class='meta cap'>
+  <span class='cap' id='post-meta'>
+    发布于&nbsp;<time datetime='2021-05-14T00:27:17.000Z'>2021-05-14</time>
+  </span>
+  
+  
+</div>
+</article></a><a class="post-card post article" href="/2021/05/12/vegenere/"><article class="excerpt md">
 
 <h2 class="post-title">
   vegenere再探究
@@ -336,27 +361,6 @@ HWS计划 emarm WP
       
       <span class="cap breadcrumb">post</span>
     
-  
-  
-</div>
-</article></a><a class="post-card post article" href="/2021/01/24/BABYRE/"><article class="excerpt md">
-
-<h2 class="post-title">
-  BABYRE
-</h2>
-<div class='excerpt'>
-  
-    <p>AD babyre WP
-这个题，是对函数体本身进行了加密。由于这里的加密比较简单，直接利用idapython在源数据上打patch（或者）复现对函数体的解密，然后分析主体函数就好了。
-附idapython文档
-附 
-</p>
-  
-</div>
-<div class='meta cap'>
-  <span class='cap' id='post-meta'>
-    发布于&nbsp;<time datetime='2021-01-24T12:04:26.000Z'>2021-01-24</time>
-  </span>
   
   
 </div>

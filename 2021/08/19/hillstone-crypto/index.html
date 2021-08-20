@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>hillstone-crypto - 王某杂谈</title>
+
+  
+    <meta name="description" content="山石摸底密码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hillstone-crypto">
+<meta property="og:url" content="http://example.com/2021/08/19/hillstone-crypto/index.html">
+<meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="山石摸底密码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-19T03:58:12.000Z">
+<meta property="article:modified_time" content="2021-08-20T01:12:47.955Z">
+<meta property="article:author" content="Zuni">
+<meta property="article:tag" content="cry">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/wiki/">wiki</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#normal-rsa"><span class="toc-text">Normal RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-chall"><span class="toc-text">Easy Chall</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#railfence"><span class="toc-text">Railfence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#safer_than_rot13"><span class="toc-text">safer_than_rot13</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag_in_your_hand"><span class="toc-text">flag_in_your_hand</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hill"><span class="toc-text">Hill</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enc"><span class="toc-text">enc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fanfie"><span class="toc-text">fanfie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enigma"><span class="toc-text">Enigma</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#meitantei-konan"><span class="toc-text">Meitantei-Konan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sm"><span class="toc-text">SM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#des-ofb"><span class="toc-text">DES-OFB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crackme_c"><span class="toc-text">Crackme_c</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fr"><span class="toc-text">FR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84rsa"><span class="toc-text">简单的RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ezrsa"><span class="toc-text">EzRSA</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-08-19T03:58:12.000Z'>2021-08-19</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>hillstone-crypto</span></h1>
+<p>山石摸底密码。</p>
+<span id="more"></span>
+<h1 id="首先是ad原题三道">首先是AD原题三道</h1>
+<h2 id="normal-rsa">Normal RSA</h2>
+<p>就是rsa初试炼，使用openssl解开就行</p>
+<h2 id="easy-chall">Easy Chall</h2>
+<p>pyc反编译，用的https://tool.lu/pyc</p>
+<p>然后把过程逆回去就行了。</p>
+<h2 id="railfence">Railfence</h2>
+<p>这个题的关键是异形篱笆。没找到自动化工具，手画了一下。</p>
+<h1 id="然后其他古典密码">然后其他古典密码</h1>
+<h2 id="safer_than_rot13">safer_than_rot13</h2>
+<p>看到比rot13安全想到维吉尼亚，用https://www.guballa.de/vigenere-solver和https://quipqiup.com/fen分别试了试，就出来了。</p>
+<h2 id="flag_in_your_hand">flag_in_your_hand</h2>
+<p>网页分析，加密就是ascii上的凯撒，解密即可。</p>
+<p>然后本地跑起来网页，解决问题。</p>
+<h2 id="hill">Hill</h2>
+<p>希尔密码，因为只有4位，用计算器求逆之后直接摸了个答矩阵乘出来，最后求模结束。</p>
+<p>求出来模发现好像是倒序的，正过来就行了。</p>
+<p>试了多次之后搜了搜flag，发现是XMAN的，套上，完成。</p>
+<h2 id="enc">enc</h2>
+<p>差点被骗，看了hint才发现原来是不懂加密与编码</p>
+<p>zero one转化01，转16进制看到=，于是转字符解base64得到摩斯电码，解电码得flag，懒得配格式了，所以直接搜了一下。</p>
+<h2 id="fanfie">fanfie</h2>
+<p>都说了是仿射密码，直接爆破12*26种可能性看跟B32后的“BIT"的关系得到k=13，m=4，然后就解出来了对应的B32，再解码即可。</p>
+<h2 id="enigma">Enigma</h2>
+<p>其实是先做的这个题，【因为对enigma和turing有执念】，然后解出来发现是BITCTF然后感觉他跟前一个题都一个格式所以就直接用BIT试上个题了。但是这个题无论是BIT还是BITS都交不上，恼。</p>
+<p>大概过程是类似于manytimes，把某个符号用题中所说的xor转换为空格依次穷举，最后得到文段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Britische Passagier-Konvoi beschmutzt bei 60 Grad Norden und 15 Grad Westen. Nehmen Sie es sofort</span><br><span class="line">06:30, Das Wetter ist heute klar. Regen am Abend</span><br><span class="line">Advance Ihre Einheit 1 Grad Norden und 2 Grad Osten</span><br><span class="line">Der Code f9r den Tag ist BITCTF&#123;Focke-Wulf Fw 200&#125;</span><br><span class="line">Berichte der britischen Marine9berwachung in Ihrer Region. Gehen Sie undercover</span><br><span class="line">Wir verfehlen Torpedos. Nur 2 9brig. Senden Sie die Lieferungen sofort</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>但交不上。</p>
+<h2 id="meitantei-konan">Meitantei-Konan</h2>
+<p>题目提到二进制，打开文段发现有两个奇怪的大写字母。所以先提取大写字母转换二进制（今天突然意识到，直接第一个出现就是1就行，毕竟没有先导零）转16进制发现等号，直接丢base得到结果。</p>
+<h1 id="对称密码">对称密码</h1>
+<h2 id="sm">SM</h2>
+<p>看了半天不知道这仨文件啥意思，后来读流程明白了：enc_flag,prime_list,result，那就从r入手。</p>
+<p>读流程，发现ps里的512个数，尾0个数均不相同，然后前边的1用来隔断。那我们就可以进行对bchoose的恢复，思路是，如果未处理的最后一位是1则说明这个长度的数一定被选了，否则其他位都为0弄不出1,然后把这个数踢出去就行了，依次还原拿到choose密钥，解答。</p>
+<h2 id="des-ofb">DES-OFB</h2>
+<p>这个题提到弱密钥的问题，回去翻了翻密码学导论的视频，找了四个弱密钥试了试，解密出来了。</p>
+<h2 id="crackme_c">Crackme_c</h2>
+<p>一点钟才看这个题，知道是白盒算法，但是实在没有逆向的欲望，就鸽掉了。</p>
+<h1 id="公钥密码">公钥密码</h1>
+<h2 id="fr">FR</h2>
+<p>这个题是铜匠的特例我知道，但是上周做的时候就没能找到比较好的脚本，自己也不太会写sage，就本来想放掉。但看有人拿了一血心有不甘最后搜到了一个只有常数项的脚本拿来用，然后跑出来了。</p>
+<p>脚本如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">from binascii import hexlify, unhexlify</span><br><span class="line">from string import printable</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def str_to_num(s):</span><br><span class="line">    return int(hexlify(s), 16)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def num_to_str(s):</span><br><span class="line">    hexed &#x3D; hex(s)[2:]</span><br><span class="line">    if len(hexed) % 2 &#x3D;&#x3D; 1:</span><br><span class="line">        hexed &#x3D; &quot;0&quot; + hexed</span><br><span class="line">    return unhexlify(hexed)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def gcd(a, b):</span><br><span class="line">    while b:</span><br><span class="line">        a, b &#x3D; b, a % b</span><br><span class="line">    return a.monic()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def franklinreiter(c_1, c_2, e_1, e_2, N, a, b):</span><br><span class="line">    P.&lt;X&gt; &#x3D; PolynomialRing(Zmod(N))</span><br><span class="line">    g_1 &#x3D; X^e_1 - c_1</span><br><span class="line">    g_2 &#x3D; (a*X + b)^e_2 - c_2</span><br><span class="line">    # get constant term</span><br><span class="line">    result &#x3D; -gcd(g_1, g_2).coefficients()[0]</span><br><span class="line"></span><br><span class="line">    return result</span><br><span class="line">    </span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">e&#x3D;97</span><br><span class="line">n &#x3D; 84269628806628781622507370036906808448839409721977257257396947220517063278172143243373016442536940094975199987168688897097566864807761212932118112781104578316146789965949837582463220212424879653817674186105043635959164819551849838163407474186956994154343889566259817124112823393438177178491833184663625002307</span><br><span class="line">c1 &#x3D; 4367045304656659698449596198948655706573350092598126520098334085945664595511123103061115913724966329224613426945287709048189812525429266880245845308509596870556543628717643821736193593457634176070986308217908141706740064366214831497923020037957821377535506846586876895644294528719184849601842193542503770105</span><br><span class="line">c2 &#x3D; 18439195353553734943512734644675774925515052571887978283192748995024360104715734306851342648521178376040518910878900749929914172981658210215016295962358232190555718924582980345277742925695082593615543248816707387990770234530122132967572178361530081382967982613654681901780215929839067687184916612502957185234</span><br><span class="line">diff&#x3D;929687493544402957343392779L</span><br><span class="line"># from python script</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">plain &#x3D; num_to_str(franklinreiter(c1, c2, e, e, n, 1, diff))</span><br><span class="line">print(plain)</span><br></pre></td></tr></table></figure>
+<h2 id="简单的rsa">简单的RSA</h2>
+<p>还是铜匠，其实就是低位被反转了嘛hhhhhh，直接上高位攻击的脚本。</p>
+<p>用了RSA-and-LLL的脚本，华丽失败。开始搜striving的博客，最后找到了能用的高位攻击脚本。</p>
+<p>在这之前先通过ed分解old pq.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def getpq(n, e, d):</span><br><span class="line">    p &#x3D; 1</span><br><span class="line">    q &#x3D; 1</span><br><span class="line">    while p &#x3D;&#x3D; 1 and q &#x3D;&#x3D; 1:</span><br><span class="line">        k &#x3D; d * e - 1</span><br><span class="line">        g &#x3D; random.randint(0, n)</span><br><span class="line">        while p &#x3D;&#x3D; 1 and q &#x3D;&#x3D; 1 and k % 2 &#x3D;&#x3D; 0:</span><br><span class="line">            k &#x2F;&#x3D; 2</span><br><span class="line">            y &#x3D; pow(g, k, n)</span><br><span class="line">            if y !&#x3D; 1 and gcd(y - 1, n) &gt; 1:</span><br><span class="line">                p &#x3D; gcd(y - 1, n)</span><br><span class="line">                q &#x3D; n &#x2F; p</span><br><span class="line">        return p, q</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后上高位即可。</p>
+<p>不过cop的原理我还是不太懂，只能是一直蹭脚本的样子，希望以后能学明白。</p>
+<h2 id="ezrsa">EzRSA</h2>
+<p>这个题之前和striving一起搞过，核心在于p=gcd((b-2021)**2021-a,n)</p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/08/11/DC/">差分攻击Grain论文复现</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
