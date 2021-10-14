@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>justplay - 王某杂谈</title>
+
+  
+    <meta name="description" content="素性检测实验报告 目录  三种算法的sage&#x2F;NTL实现 链接：雅各比符号及其haskell实现 数据测试及性能比较 三种算法的原理再探究 概率推算与次数推荐 卡米歇尔数（伪素数） 实际使用中的一些“优化” 素性检测带来的经典漏洞：CVE-2018-4398 一些碎碎念  1. 算法实现 1.1 sage实现 1.1.1 单轮素性检测 1234567891011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="justplay">
+<meta property="og:url" content="http://example.com/2021/10/04/justplay/index.html">
+<meta property="og:site_name" content="王某杂谈">
+<meta property="og:description" content="素性检测实验报告 目录  三种算法的sage&#x2F;NTL实现 链接：雅各比符号及其haskell实现 数据测试及性能比较 三种算法的原理再探究 概率推算与次数推荐 卡米歇尔数（伪素数） 实际使用中的一些“优化” 素性检测带来的经典漏洞：CVE-2018-4398 一些碎碎念  1. 算法实现 1.1 sage实现 1.1.1 单轮素性检测 1234567891011">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/10/04/justplay/image-20211004171759398.png">
+<meta property="og:image" content="http://example.com/2021/10/04/justplay/image-20211014172814065.png">
+<meta property="article:published_time" content="2021-10-04T05:06:13.000Z">
+<meta property="article:modified_time" content="2021-10-14T15:25:41.389Z">
+<meta property="article:author" content="Zuni">
+<meta property="article:tag" content="play">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/10/04/justplay/image-20211004171759398.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+  
+    <a class='title' href='/'>
+      王某杂谈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/wiki/">wiki</a><a class="nav-item" href="/friends/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">1. 算法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sage%E5%AE%9E%E7%8E%B0"><span class="toc-text">1.1 sage实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E8%BD%AE%E7%B4%A0%E6%80%A7%E6%A3%80%E6%B5%8B"><span class="toc-text">1.1.1 单轮素性检测</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E8%BD%AE%E7%B4%A0%E6%80%A7%E6%A3%80%E6%B5%8B"><span class="toc-text">1.1.2 多轮素性检测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ntl"><span class="toc-text">1.2 NTL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E9%9B%85%E5%90%84%E6%AF%94%E7%AC%A6%E5%8F%B7%E5%8F%8A%E5%85%B6haskell%E5%AE%9E%E7%8E%B0"><span class="toc-text">2. 链接：雅各比符号及其haskell实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E7%AC%A6%E5%8F%B7"><span class="toc-text">2.1 勒让德符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%85%E5%90%84%E6%AF%94%E7%AC%A6%E5%8F%B7"><span class="toc-text">2.2 雅各比符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#haskell"><span class="toc-text">2.3 haskell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#haskell%E7%AE%80%E4%BB%8B"><span class="toc-text">2.3.1 haskell简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#haskell-jacobi%E7%AC%A6%E5%8F%B7%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.3.2 haskell jacobi符号实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%8B%E8%AF%95%E5%8F%8A%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83"><span class="toc-text">3. 数据测试及性能比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%BD%AE%E7%B4%A0%E6%95%B0%E6%A3%80%E6%B5%8B"><span class="toc-text">3.1 单轮素数检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BD%AE%E6%A3%80%E6%B5%8B%E4%BB%A3%E7%A0%811"><span class="toc-text">3.1.1 单轮检测代码1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BD%AE%E6%A3%80%E6%B5%8B%E4%BB%A3%E7%A0%812"><span class="toc-text">3.1.2 单轮检测代码2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%BD%AE%E7%B4%A0%E6%95%B0%E6%A3%80%E6%B5%8B"><span class="toc-text">3.2 多轮素数检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E8%BD%AE%E6%A3%80%E6%B5%8B%E4%BB%A3%E7%A0%811"><span class="toc-text">3.2.1 多轮检测代码1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E8%BD%AE%E6%A3%80%E6%B5%8B%E4%BB%A3%E7%A0%812"><span class="toc-text">3.2.2 多轮检测代码2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E7%AE%97%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86%E5%86%8D%E6%8E%A2%E7%A9%B6"><span class="toc-text">4. 三种算法的原理再探究</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%AD%E8%AF%81"><span class="toc-text">4.1 “凭证”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#solovay_strassen%E7%AE%97%E6%B3%95"><span class="toc-text">4.2 solovay_Strassen算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miller_rabin%E7%AE%97%E6%B3%95"><span class="toc-text">4.3 miller_rabin算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="toc-text">4.4 费马小定理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E7%8E%87%E6%8E%A8%E7%AE%97%E4%B8%8E%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9"><span class="toc-text">5. 概率推算与参数选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E7%89%B9%E6%AE%8A%E6%95%B0"><span class="toc-text">6. 寻找特殊数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%A1%E7%B1%B3%E6%AD%87%E5%B0%94%E6%95%B0"><span class="toc-text">6.1 卡米歇尔数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E7%B4%A0%E6%95%B0"><span class="toc-text">6.2 伪素数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BC%98%E5%8C%96"><span class="toc-text">7. 实际使用中的一些“优化”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%B8%9A%E9%97%AE%E9%A2%98"><span class="toc-text">7.1 工业问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%B8%9A%E4%BC%98%E5%8C%96"><span class="toc-text">7.2 工业优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A0%E6%80%A7%E6%A3%80%E6%B5%8B%E5%B8%A6%E6%9D%A5%E7%9A%84%E7%BB%8F%E5%85%B8%E6%BC%8F%E6%B4%9Ecve-2018-4398"><span class="toc-text">8. 素性检测带来的经典漏洞：CVE-2018-4398</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E4%BC%AA%E8%AF%81%E5%AE%9A%E7%90%86"><span class="toc-text">1. 强伪证定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E6%98%8E"><span class="toc-text">2. 证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="toc-text">3. 漏洞复现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%84%9A%E6%9C%AC"><span class="toc-text">4. 题目脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%84%9F%E6%83%B3"><span class="toc-text">9. 一些感想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">10.参考资料</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-10-04T05:06:13.000Z'>2021-10-04</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>justplay</span></h1>
+<span id="more"></span>
+<h1 id="素性检测实验报告">素性检测实验报告</h1>
+<h2 id="目录">目录</h2>
+<ol type="1">
+<li>三种算法的sage/NTL实现</li>
+<li>链接：雅各比符号及其haskell实现</li>
+<li>数据测试及性能比较</li>
+<li>三种算法的原理再探究</li>
+<li>概率推算与次数推荐</li>
+<li>卡米歇尔数（伪素数）</li>
+<li>实际使用中的一些“优化”</li>
+<li>素性检测带来的经典漏洞：CVE-2018-4398</li>
+<li>一些碎碎念</li>
+</ol>
+<h2 id="算法实现">1. 算法实现</h2>
+<h3 id="sage实现">1.1 sage实现</h3>
+<h5 id="单轮素性检测">1.1.1 单轮素性检测</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Fermat</span>(<span class="params">p</span>):</span></span><br><span class="line">    a=randint(<span class="number">2</span>,p-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span>  <span class="built_in">pow</span>(a,p-<span class="number">1</span>,p)==<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Solovay_Strassen</span>(<span class="params">p</span>):</span></span><br><span class="line">    a=randint(<span class="number">2</span>,p-<span class="number">1</span>)</span><br><span class="line">    t=<span class="built_in">pow</span>(a,(p-<span class="number">1</span>)//<span class="number">2</span>,p)</span><br><span class="line">    <span class="keyword">return</span> t==jacobi_symbol(a,p)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Miller_rabin</span>(<span class="params">n</span>):</span></span><br><span class="line">    b=randint(<span class="number">1</span>,n-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">2</span> <span class="keyword">or</span> n == <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    r, s = <span class="number">0</span>, n - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> s % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">        s //= <span class="number">2</span></span><br><span class="line">    x = <span class="built_in">pow</span>(b, s, n)</span><br><span class="line">    <span class="keyword">if</span> x == <span class="number">1</span> <span class="keyword">or</span> x == n - <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(r - <span class="number">1</span>):</span><br><span class="line">        x = <span class="built_in">pow</span>(x, <span class="number">2</span>, n)</span><br><span class="line">        <span class="keyword">if</span> x == n - <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，在sage中集成了jacobi符号，函数名为jacobi_symbol,输入为a,b,其中b为正奇数，a为整数，输出为-1，0，1，所以我们直接使用了集成函数以声明来源。而事实上，在经典实现中，本段其实应该用t==1 or t==-1 代替。(ps.用sage跑，得到的pow是在环上的，这时==是同余，用python跑请用p-1代替-1)</p>
+<p>那么，为何不用判断t是否为0呢？这样做除了效率因素外又是否有其他考究？</p>
+<p>下面我们将从两个方面进行说明。</p>
+<ol type="1">
+<li><p>从素性检测的角度，我们知道，jacobi符号是对legendre符号denominator非素时的推广，其为-1或1，而推广中0的结果是由于合数的归约所导致，所以当jacobi_symbol==0时，其本身就代表了对待测数素数性的一个推翻，故不能加入判断。</p></li>
+<li><p>从模幂运算的角度，我们知道，一个非0数在有限域上的幂必然不为0。在实数域上这是显然的，但在其他数环中未必成立，我们不妨从GF(p)有限域开始来证明一下。</p>
+<p>我们假设，在有限域GF(p)中存在数a，b，使得<span class="math display">\[a^b \equiv 0  \pmod {p}\]</span>,则有<span class="math display">\[a^b|p\]</span>,而已知由于有限域，p为素数只有一个素因子，即其本身p，在<span class="math display">\[GF(p)\]</span>中，对于任意a，<span class="math display">\[a\not{|} \space p\]</span>,所以与上式矛盾，因此此时不存在这样的数a满足pow(a,b,p)==0</p>
+<p>同理拓展，对于任意整数m进行唯一素分解,即<span class="math display">\[m=p^{n_1}_1 p^{n_2}_2 p^{n_3}_3\cdots\]</span>,当<span class="math display">\[n_i\]</span>均为1时，对于任意a，均存在<span class="math display">\[p_i\]</span>,有<span class="math display">\[a\not {|}\space p _i\]</span>，进而原式可被规约至<span class="math display">\[GF(p_i)\]</span>上，可知其也不存在pow(a,b,m)==0的情况。</p>
+<p>而当<span class="math display">\[\exist n_i\neq 1\]</span>时，则将存在<span class="math display">\[m_1=p_1 p_2 p_3\cdots\]</span>，这时必有<span class="math display">\[n_{max}=max(n_i)\]</span>，使得<span class="math display">\[m_1^{n_{max}}|m\]</span>，即<span class="math display">\[pow(m_1,n_{max},m)==0\]</span>，不过这时如素性检测所言也是不合法的情况。</p>
+<p>在这里写下这些其实是为了说明一个问题，对于素数，我们可以发现素性检测必然成立，但是对于一些具有特殊性质的合数，在某些检验的方面他们并不如同质数与合数的划分那么清晰(如对于模幂运算后是否可能为0这个我们上文自己提出的划分标准就有可列举的反例，若加入判断则会有含有质数幂方的因子的数失效)，一些数字依然会在某些检测中被略过——这也是我写下这篇博客的缘由，所以我们需要进行多轮素性检测以增加准确性。</p></li>
+</ol>
+<h5 id="多轮素性检测">1.1.2 多轮素性检测</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fermat</span>(<span class="params">p,b</span>):</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(b):</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> Fermat(p):</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">True</span>	</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solovay_Strassen</span>(<span class="params">p,b</span>):</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(b):</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> Solovay_Strassen(p):</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">miller_rabin</span>(<span class="params">n, b</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Miller Rabin test testing over all</span></span><br><span class="line"><span class="string">    prime basis &lt; b</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    basis = [randint(<span class="number">1</span>,n-<span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(b)]</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">2</span> <span class="keyword">or</span> n == <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    r, s = <span class="number">0</span>, n - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> s % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">        s //= <span class="number">2</span></span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> basis:</span><br><span class="line">        x = <span class="built_in">pow</span>(b, s, n)</span><br><span class="line">        <span class="keyword">if</span> x == <span class="number">1</span> <span class="keyword">or</span> x == n - <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(r - <span class="number">1</span>):</span><br><span class="line">            x = <span class="built_in">pow</span>(x, <span class="number">2</span>, n)</span><br><span class="line">            <span class="keyword">if</span> x == n - <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="ntl">1.2 NTL</h3>
+<p>因为ntl运行接口较慢且难以拓展，不作为本篇重点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;NTL/ZZ.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> NTL;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Fermat1</span><span class="params">(ZZ a,ZZ p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;请输入p：&quot;</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; p;</span><br><span class="line">	a = RandomBnd(p - <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (GCD(a, p) != <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			a = RandomBnd(p - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (PowerMod(a, p - <span class="number">1</span>, p) == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			a = RandomBnd(p - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;p不是素数&quot;</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (i == <span class="number">4</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;p是素数&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SoSt</span><span class="params">(ZZ a, ZZ p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;请输入p：&quot;</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; p;</span><br><span class="line">	<span class="keyword">while</span> (p &gt; <span class="number">2</span> &amp;&amp; p % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; p;</span><br><span class="line">	&#125;</span><br><span class="line">	a = RandomBnd(p - <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (GCD(a, p) != <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			a = RandomBnd(p - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (PowerMod(a, (p - <span class="number">1</span>) / <span class="number">2</span>, p) == Jacobi(a, p) || PowerMod(a, (p - <span class="number">1</span>) / <span class="number">2</span>, p) == Jacobi(a, p) + p)</span><br><span class="line">		&#123;</span><br><span class="line">			a = RandomBnd(p - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;p不是素数&quot;</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (i == <span class="number">4</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;p是素数&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ZZ a, p;</span><br><span class="line">	Fermat1(a, p);</span><br><span class="line">	SoSt(a, p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="链接雅各比符号及其haskell实现">2. 链接：雅各比符号及其haskell实现</h2>
+<p>前文我们提到了，雅各比符号是对勒让德符号的一种拓展，那么我们先从勒让德符号讲起。</p>
+<h3 id="勒让德符号">2.1 勒让德符号</h3>
+<p>勒让德符号本质上反映了一个非0数是否为另一个素数的二次剩余。</p>
+<p>我们知道，一个质数形成的有限域，其域上非零元素一半为二次剩余一半为非二次剩余。</p>
+<p>即<span class="math display">\[x^2=a \pmod {p}\]</span>有解&lt;==&gt;<span class="math display">\[(\frac{a}{p})==1\]</span>。</p>
+<p>特性：</p>
+<ol type="1">
+<li>积性函数：<span class="math display">\[(\frac{ab}{p})=(\frac{a}{p})(\frac{b}{p})\]</span></li>
+<li><span class="math display">\[(\frac{a^2}{p})=1\]</span></li>
+<li><span class="math display">\[(\frac{a}{p})=(\frac{b}{p})\]</span>,当<span class="math display">\[a\equiv b \pmod {p}\]</span></li>
+<li><span class="math inline">\((\frac{p}{q})=(-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}(\frac{q}{p})\)</span></li>
+<li><span class="math inline">\((\frac{-1}{p})=(-1)^{\frac{p-1}{2}},(\frac{1}{p})=1\)</span></li>
+<li><span class="math inline">\((\frac{2}{p})=(-1)^{\frac{p^2-1}{8}}\)</span></li>
+</ol>
+<p>以上性质，说明了这个函数是一个可递归实现的函数：</p>
+<p>性质1为递归提供了子问题划分的条件（类似欧拉函数）。</p>
+<p>性质4为递归提供了稳态破坏的条件。</p>
+<p>性质3为递归提供了子问题的一种等价划分</p>
+<p>性质5，6为递归提供了递归的终止态。</p>
+<h3 id="雅各比符号">2.2 雅各比符号</h3>
+<p>雅各比符号进一步把素数推广为非偶数的正整数，并继承了以上性质，因此雅各比符号也是可递归实现的，适合使用函数式实现。</p>
+<p>需要注意的是，雅各比符号毕竟是使用的非质数m进行推广，其在二次剩余上的意义被打破，对于判断在非有限域下的其他整数环中是否为二次剩余没有指导意义。</p>
+<p>除此之外，在1.1.1节中我们提到了雅各比符号与模幂运算之间的内在关联，因此在此我们可以下一个粗浅的结论来解释雅各比符号中加入的值0的含义：</p>
+<p><span class="math inline">\((\frac{a}{m})==0&lt;=&gt;gcd(m,a)!=1\)</span></p>
+<h3 id="haskell">2.3 haskell</h3>
+<h4 id="haskell简介">2.3.1 haskell简介</h4>
+<p>haskell是目前最为接触数学的编程语言，其纯函数式的特性使得其在大部分数学函数的实现中以无可比拟的美感起到了令人震撼的作用。</p>
+<h4 id="haskell-jacobi符号实现">2.3.2 haskell jacobi符号实现</h4>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">jacobi</span> :: (<span class="type">Integral</span> a)=&gt;a-&gt;a-&gt;a</span><br><span class="line"><span class="title">jacobi</span> n m</span><br><span class="line">  | (m &lt; <span class="number">0</span>) = error <span class="string">&quot;neg m&quot;</span></span><br><span class="line">  | (m `mod` <span class="number">2</span> == <span class="number">0</span>)  = error <span class="string">&quot;even m&quot;</span></span><br><span class="line">  | otherwise = jacobi&#x27; n m</span><br><span class="line"></span><br><span class="line"><span class="title">jacobi&#x27;</span> :: (<span class="type">Integral</span> a)=&gt;a-&gt;a-&gt;a</span><br><span class="line"><span class="title">jacobi&#x27;</span> <span class="number">1</span> _ = <span class="number">1</span></span><br><span class="line"><span class="title">jacobi&#x27;</span> (<span class="number">-1</span>) m = (<span class="number">-1</span>) ^ (div (m<span class="number">-1</span>) <span class="number">2</span>)</span><br><span class="line"><span class="title">jacobi&#x27;</span> <span class="number">0</span> _ = <span class="number">0</span></span><br><span class="line"><span class="title">jacobi&#x27;</span> <span class="number">2</span> m = (<span class="number">-1</span>) ^ (div (m^<span class="number">2</span><span class="number">-1</span>) <span class="number">8</span>) </span><br><span class="line"><span class="title">jacobi&#x27;</span> n m</span><br><span class="line">  | n &lt; (<span class="number">-1</span>)  = (jacobi&#x27; (<span class="number">-1</span>) m ) *(jacobi&#x27; (- n) m)</span><br><span class="line">  | n &gt; m = jacobi&#x27; (n `mod` m) m</span><br><span class="line">  | (n `mod ` <span class="number">2</span> == <span class="number">0</span>) = (jacobi&#x27; <span class="number">2</span> m)*(jacobi&#x27; (div n <span class="number">2</span>) m)</span><br><span class="line">  | otherwise = (jacobi&#x27; (<span class="number">-1</span>) (div (m*n-m-n+<span class="number">3</span>) <span class="number">2</span>))*(jacobi&#x27; m n)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>主函数jacobi主要处理了报错信息，计算函数jacobi'处理了对应的递归模式。</p>
+<p>可以看到，jacobi在haskell上的实现代码量最多是相同Python实现的1/2。</p>
+<h2 id="数据测试及性能比较">3. 数据测试及性能比较</h2>
+<h3 id="单轮素数检测">3.1 单轮素数检测</h3>
+<p>由于在实际计算中，sage的底层引用一般不选择NTL，所以导致其实现较快（还没读源码，猜测问题是出在了对大数的内存管理上），因此本次测试我们统一使用sage。</p>
+<h4 id="单轮检测代码1">3.1.1 单轮检测代码1</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test_number=[<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">115921 252601 72934879102271241648426492271730744633800277079752665073951 22356556428347371191698399214467787018791948334691697578290577962216876499377539334483720552975347714328452036074010604373528959269622147129120835027063319925220078829082931022948650474024417050974139419013871612480613081473425031484830581421090988945262028469222454196445529288787619959670372054180614638559 59781728296291796158017561748790663563089826605613453665484905474067787844371928298271399443627910058186271964388689059202384502829570397941413694221362295301992777901316834935383384311335512396099609207669093853533128308369361287391546232562965636847929476475654404583285950058456806751391620048033664557683 28494763464967883432404625600246500270772945929877245405931752469865039864230821468097563814857376172612971356800192745072503914472425803446304874347819820876404436537980316277614506865977235566602316683632497367119801578047171561102922761465857684859995527428337609809476794854474027492330502370339054042789</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>.split()]</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;round&quot;</span>+<span class="built_in">str</span>(j))</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> test_number:</span><br><span class="line">		<span class="built_in">print</span>(Fermat(i),Solovay_Strassen(i),miller_rabin(i,<span class="number">1</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出10轮，结果如下：<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2021/10/04/justplay/image-20211004171759398.png" class="lazy" title="image-20211004171759398"></p>
+<p>我们已知前三个数为合数，后三个数为质数，可以发现，在质数的情况下，三个算法的输出都完全正确，但在合数的情况下则出现问题，我们定义在本次实验中前三个数判断正确的次数为hit，有：</p>
+<table>
+<thead>
+<tr class="header">
+<th>num</th>
+<th>F</th>
+<th>S</th>
+<th>M</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>115921</td>
+<td>1</td>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>252601</td>
+<td>1</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>729348……</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现单轮miller实现效果较好，基本都成功反映了效果</p>
+<p>但对于F和S两个算法，在一部分数上的实现效果较差。</p>
+<p>由于这几种算法都是概率化算法，所以我们需要更多数据来测算到底每个算法的概率如何。</p>
+<h4 id="单轮检测代码2">3.1.2 单轮检测代码2</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">dic=[[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        t=[Fermat(test_number[i]),Solovay_Strassen(test_number[i]),Miller_rabin(test_number[i])]</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">if</span> t[k]==<span class="literal">False</span>:</span><br><span class="line">                dic[i][k]+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        dic[i][j]/=<span class="number">100000</span></span><br><span class="line">        dic[i][j]=<span class="built_in">float</span>(dic[i][j])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dic)</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[0.10542, 0.55227, 0.96472], [0.04881, 0.52552, 0.92677], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.10411, 0.55115, 0.96558], [0.04945, 0.52453, 0.92573], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.10445, 0.55192, 0.96502], [0.05026, 0.52759, 0.92602], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.10541, 0.55304, 0.9654], [0.05097, 0.52545, 0.92639], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.1052, 0.55266, 0.96401], [0.04878, 0.52237, 0.9243], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.10775, 0.55398, 0.96516], [0.04912, 0.52314, 0.92467], [1.0, 1.0, 1.0]]</span><br></pre></td></tr></table></figure>
+<p>可以发现以下特征：</p>
+<ol type="1">
+<li><p>对于第三个合数的识别无论算法单轮都达到了100%，而对于前两个素数则有所差异。</p></li>
+<li><p>可以发现对于前两组数据，每个算法都有自己的趋向值，由于选择次数为10000，且多轮重复可认为较大，所以可得到以下概率表</p>
+<table>
+<thead>
+<tr class="header">
+<th>numrate</th>
+<th>F</th>
+<th>S</th>
+<th>M</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>115921</td>
+<td>10%</td>
+<td>55%</td>
+<td>96%</td>
+</tr>
+<tr class="even">
+<td>252601</td>
+<td>5%</td>
+<td>52%</td>
+<td>92%</td>
+</tr>
+<tr class="odd">
+<td>729348……</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>如果单独对于算法进行分析，费马的概率最低，在10%左右；solovay_Strassen的概率在50%左右，miller的概率接近100%</p></li>
+</ol>
+<p>为了进一步探究，我们又选择了三个随机生成的合数[855253, 625886, 865844]进行实验</p>
+<p>得到结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[0.99996, 0.99996, 0.99998], [1.0, 0.49988, 1.0], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.99998, 1.0, 1.0], [1.0, 0.5006, 1.0], [1.0, 0.99998, 1.0]]</span><br><span class="line">[[0.99996, 0.99996, 1.0], [1.0, 0.50109, 1.0], [1.0, 0.99999, 1.0]]</span><br><span class="line">[[0.99996, 0.99998, 1.0], [1.0, 0.50033, 1.0], [1.0, 0.99998, 1.0]]</span><br><span class="line">[[0.99993, 0.99998, 0.99999], [1.0, 0.50036, 1.0], [1.0, 0.99999, 1.0]]</span><br><span class="line">[[0.99993, 0.99999, 0.99999], [1.0, 0.49851, 1.0], [1.0, 1.0, 1.0]]</span><br></pre></td></tr></table></figure>
+<p>可以发现似乎大部分情况下，费马法和米勒法的结果都是高置信的，而solovay_Strassen的结果不是50%就是接近100%。</p>
+<p>那么在这个基础上，我们暂且给出以下结论：</p>
+<ol type="1">
+<li>给出的前两组数据，有特殊性，且较为稀少。</li>
+<li>对于这类特殊数据，费马法发挥不佳，成功概率姑且认为是10%；对于其他数据成功概率则接近100%</li>
+<li>solovay_Strassen算法对于大部分数据，成功概率都在50%或者100%左右，我们保守估计，取50%作为单轮的成功概率；</li>
+<li>miller对于特殊数据的成功率也有降低，但不多我们保守估计按照90%作为单轮的成功概率。</li>
+</ol>
+<h3 id="多轮素数检测">3.2 多轮素数检测</h3>
+<p>我们假设要求成功率高于99.99%，则有<span class="math inline">\(hit\_rate^x&lt;1-99.99\%\)</span>,计算得，对于三种算法的测试轮数应为</p>
+<p>费马：88</p>
+<p>solovay_Strassen ：14</p>
+<p>million：4</p>
+<p>进行测试</p>
+<h4 id="多轮检测代码1">3.2.1 多轮检测代码1</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> test_number:</span><br><span class="line">    <span class="built_in">print</span>(fermat(i,<span class="number">88</span>),solovay_Strassen(i,<span class="number">14</span>),miller_rabin(i,<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+<p>测试十次，结果均正确。（不再放图）</p>
+<h4 id="多轮检测代码2">3.2.2 多轮检测代码2</h4>
+<p>源代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dic=[[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        t=[Fermat(test_number[i]),Solovay_Strassen(test_number[i]),Miller_rabin(test_number[i])]</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">if</span> t[k]==<span class="literal">False</span>:</span><br><span class="line">                dic[i][k]+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        dic[i][j]/=<span class="number">100000</span></span><br><span class="line">        dic[i][j]=<span class="built_in">float</span>(dic[i][j])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dic)</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[0.99994, 0.99998, 0.99999], [0.98911, 0.99995, 0.99999], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.99991, 0.99999, 1.0], [0.98901, 0.99995, 0.99995], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.99992, 1.0, 1.0], [0.98869, 0.99999, 0.99998], [1.0, 1.0, 1.0]]</span><br><span class="line">[[0.99998, 0.99999, 1.0], [0.98911, 0.99998, 0.99996], [1.0, 1.0, 1.0]]</span><br></pre></td></tr></table></figure>
+<p>发现对于第二组，费马成功率不达标，原因是他的单轮成功率为5%左右，而不是我们预期的10%。</p>
+<p>代入计算得 <span class="math inline">\(1-0.95^{88}=0.989\)</span>,符合实际效果。那么对于本数据，若达到99.99%置信度，实际次数应为180，对其单独测试，有输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.99985，0.99984，0.99993，0.99991，0.9999</span><br></pre></td></tr></table></figure>
+<p>基本符合预期。</p>
+<h2 id="三种算法的原理再探究">4. 三种算法的原理再探究</h2>
+<p>从刚刚的数据测试以及性能比较中我们发现两个问题：</p>
+<p>1.算法是概率的；</p>
+<p>2.算法稳定性是随具体数据而变化的。</p>
+<p>在实际应用中显然我们不能先测出来具体数据的成功概率再进行校验，但如果能找到一个确定的上界，我们就可以按照这个上界把单轮变为多轮来进行测算。因此，我们需要了解算法的具体细节，进行原理再探究。</p>
+<h3 id="凭证">4.1 “凭证”</h3>
+<p>对于待测数p,若有任意正整数a,若a使得对应算法判断p为合数，则称a为p的一个凭证；否则则为一个强伪证。</p>
+<h3 id="solovay_strassen算法">4.2 solovay_Strassen算法</h3>
+<p>通过查阅资料得知，该算法的凭证约有二分之一，与我们的估计相同，具体证明未见。</p>
+<h3 id="miller_rabin算法">4.3 miller_rabin算法</h3>
+<p>根据《算法数论》等资料，我们知道miller_rabin的凭证约有1/4，具体证明参见Rabin在1977年的论文中证明了下列定理：若<span class="math inline">\(n\)</span>为大约4的合数，则有</p>
+<p><span class="math display">\[\frac{3(n-1)}{4} \leq c({b | W_n(b)})\]</span></p>
+<p>其中<span class="math inline">\(W_n(b)\)</span>表示<span class="math inline">\(b\)</span>是<span class="math inline">\(n\)</span>为合数的一个凭证；<span class="math inline">\(c(S)\)</span>表示集合<span class="math inline">\(S\)</span>中元素的数目。上述定理表明，在<span class="math inline">\([1, n-1]\)</span>的整数中，最多只有<span class="math inline">\(\frac{1}{4}(n-1)\)</span>个数不是<span class="math inline">\(n\)</span>为合数的凭证。因此，在<span class="math inline">\([1, n-1]\)</span>中任选整数<span class="math inline">\(a\)</span>进行测试，能够测试出<span class="math inline">\(n\)</span>为合数的概率<span class="math inline">\(\leq \frac{3}{4}\)</span>，即Miller-Rabin算法的错误概率不大于<span class="math inline">\(\frac{1}{4}\)</span>。</p>
+<p>然而，这个数据与我们测试的并不相符，事实上，他还有更紧的界，证明如下：</p>
+<p>如果我们不断随机选取<span class="math inline">\(k\)</span>位（二进制位）的奇数，对这个数进行<span class="math inline">\(t\)</span>次互相独立的随机Miller-Rabin检测，输出第一个通过所有测试的数，令<span class="math inline">\(p_{k, t}\)</span>表示这个数是合数的概率，则<span class="math inline">\(p_{k, t}\)</span>比<span class="math inline">\(4^{-t}\)</span>小得多。事实上，<span class="math inline">\(p_{k, t}\)</span>满足下列公式：</p>
+<p><span class="math inline">\(k \geq 2\)</span>时，<span class="math inline">\(p_{k, t} &lt; k^2 4^{2 - \sqrt{k}}\)</span></p>
+<p><span class="math inline">\(t = 2, k \geq 88\)</span>或<span class="math inline">\(3 \leq t \leq k/9, k \geq21\)</span>时，<span class="math inline">\(p_{k, t} &lt; k^{3/2} 2^t t^{-1/2} 4^{2 -\sqrt{tk}}\)</span></p>
+<p><span class="math inline">\(t \geq k/9, k \geq 21\)</span>时，<span class="math inline">\(p_{k, t} &lt; \frac{7}{20} k 2^{-5t} + \frac{1}{7} k^{15/4} 2^{-k/2 - 2t} + 12k 2^{-k/4 - 3t}\)</span></p>
+<p><span class="math inline">\(t \geq k/4, k \geq 21\)</span>时，<span class="math inline">\(p_{k, t} &lt; \frac{1}{7} k^{15/4} 2^{-k/2 -2t}\)</span></p>
+<h3 id="费马小定理">4.4 费马小定理</h3>
+<p>通过资料我们得知，费马小定理的凭证一般而言约有1/2，具体证明如下：</p>
+<p>对于<span class="math inline">\(n=p_1^{m_1}p_2^{m_2}p_3^{m_3}\cdots\)</span>,则有<span class="math inline">\(n-\phi{(n)}\)</span>个数与之不互素，这些数的非0次模幂组成的群本身就不包含1这个元，所以有至少<span class="math inline">\(m=n-1-\phi{(n)}\)</span>个数是凭证，对于非这m个数的数，我们认为其为潜在的凭证。</p>
+<p>若其中有一个数a为凭证，则对于某个潜在凭证b，若b不为凭证，则<span class="math inline">\((a*b)^{n-1}=a^{n-1}*1\neq 1 \pmod n\)</span>，即a*b也是凭证，我们取所有不等的潜在凭证中的非凭证为<span class="math inline">\(\{b_k\}\)</span>，则对于a产生均可以产生<span class="math inline">\(c_k=ab_k\)</span>的凭证，这时我们可以知道对于<span class="math inline">\(i\neq j\)</span>，<span class="math inline">\(c_i\neq c_j\)</span>（否则可以乘a的逆元得到<span class="math inline">\(b_i=b_j\)</span>，与题设矛盾）于是这2k个数形成m个数的一个子集，可知非凭证数小于<span class="math inline">\(\frac{\phi(n)}{2}\)</span>，即还有至少<span class="math inline">\(\frac{\phi(n)}{2}\)</span>个数为凭证，这时凭证数<span class="math inline">\(w&gt;\frac{n}{2}\)</span>。</p>
+<p>但是其中如果一个凭证都没有的时候呢？这个问题我们留到第六节细细讨论。</p>
+<p>我们首先回归本章最初提出的问题：如何选择实际运行的参数？</p>
+<h2 id="概率推算与参数选择">5. 概率推算与参数选择</h2>
+<p>假设要求成功率高于99.99%，则有<span class="math inline">\(hit\_rate^x&lt;1-99.99\%\)</span>。计算得，对于三种算法的测试轮数应为：</p>
+<p>solovay_Strassen与fermat算法大致需要14次；</p>
+<p>miller_rabin算法需要7次。</p>
+<p>而另一方面我们又知道，这个参数的选择与具体数据有关，通过查阅工业界资料，我们发现数据的长度也对选择次数有一定影响，以OpenSSL为例，我们可以发现如下表格：</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2021/10/04/justplay/image-20211014172814065.png" class="">
+<p>除此之外，在工业界中我们发现一般只使用miller_rabin算法和其他准确定性算法以及基于连分数或数列的概率算法。</p>
+<p>使用这些参数再去分析算法，我们发现对于最开始的两组测试数据依旧无法解释他们的反常，而通过四五节的分析，我们有理由怀疑这并不是算法的错误，而是数据本身具有特殊性质，即满足4.4中提到的，”没有非平凡凭证的数“。</p>
+<h2 id="寻找特殊数">6. 寻找特殊数</h2>
+<h3 id="卡米歇尔数">6.1 卡米歇尔数</h3>
+<p>卡迈克尔数的定义是对于合数n，如果对于所有与n互质的正整数b，都有同余式b^(n-1)≡ 1 (mod n)成立，则称合数n为Carmichael数。</p>
+<p>卡米歇尔数有一些特殊性质：</p>
+<ol type="1">
+<li><p>每个Carmichael至少是三个不同素数的乘积。</p></li>
+<li><p>对于每个Carmichael p，对于任意非零整数a，有<span class="math inline">\(a^{p}≡ a (mod p)\)</span>。即，卡米歇尔数满足费马小定理。</p></li>
+</ol>
+<p>这充分说明了，满足费马小定理并不是素数的充要条件，他只是一个必要性条件，但不充分。事实上，当前社会条件下，我们仍未找到被完全证明的，可计算性良好的与素数等价的条件，这也是素数这么神奇的一个原因。</p>
+<h3 id="伪素数">6.2 伪素数</h3>
+<p>既然素数并没有等价的充要条件，那么我们能不能推广定义出相对于其他必要性的”伪素数“呢？</p>
+<p>通过查阅资料我们发现，这种推广定义确实存在，而且的确被应用于工业界并造成了问题。</p>
+<h2 id="实际使用中的一些优化">7. 实际使用中的一些“优化”</h2>
+<h3 id="工业问题">7.1 工业问题</h3>
+<p>在实际工业产品中，我们会注意发现这样一些问题：</p>
+<ol type="1">
+<li>相比与素数，合数成为凭证的难度更大，带来的判断效果整体上不如素数更专一；</li>
+<li>实际检测数据长度不定带来产生随机数的数据范围不定，在更大的范围中，随机数算法会失效，或其随机效果打折扣；</li>
+<li>使用更大的数据来判断时，会耗费更多资源，同时减慢速度，而较小的一些常用素数就已经可以应对在一定范围内的所有数据的正确性。</li>
+</ol>
+<h3 id="工业优化">7.2 工业优化</h3>
+<p>在实际工业中，使用的miller_rabin算法往往会有以下的“优化”方案：</p>
+<ol type="1">
+<li>使用一个限定小范围内的随机数进行判断以降低运算量</li>
+<li>减少判断次数以提高速度</li>
+<li>使用固定基进行判断</li>
+</ol>
+<p>那么针对以上这些速度优化带来的算法漏洞，我们有没有什么可以进行绕过呢。</p>
+<p>答：必然存在，以下就是一个经典的例子。</p>
+<h2 id="素性检测带来的经典漏洞cve-2018-4398">8. 素性检测带来的经典漏洞：CVE-2018-4398</h2>
+<p>CVE-2018-4398 是发生于苹果设备上的一个通用漏洞，产生原因是在miller_rabin算法中使用了固定的一组素数基。具体细节可参考《prime and prejudice》</p>
+<p>文中提到了一种关于这类素数检测攻击方式，来源是95年的论文《Fran¸cois Arnault. Constructing Carmichael numbers which are strong pseudoprimes to several bases. Journal of Symbolic Computation》，接下来我们来复现一下。</p>
+<h3 id="强伪证定理">1. 强伪证定理</h3>
+<p>文中提到了这样一个定理：对于<span class="math inline">\(n=p_1p_2p_3\cdots\)</span>,给定参数<span class="math inline">\(k_i=\frac{p_i-1}{p_1-1}\)</span>,<span class="math inline">\(m_i=\frac{\Pi_{i\neq j}(p_i-1)}{p_i-1}\)</span>,如果<span class="math inline">\(k_i\)</span>为奇整数，<span class="math inline">\(m_i\)</span>为整数，且对于检测基b,均有<span class="math inline">\((\frac{b}{p_i})=-1\)</span>,则b是n的强伪证。</p>
+<h3 id="证明">2. 证明</h3>
+<p>由于<span class="math inline">\(k_i\)</span>为整数，则<span class="math inline">\(b^{(n-1)/2}=b^{(2m+1)(p_i-1)/2}=(b^{(p_i-1)/2})^{2m+1}=(b^{(p_i-1)/2})=(\frac{b}{p_i}) \pmod n\)</span>,</p>
+<p>因此当<span class="math inline">\((\frac{b}{p_i})=-1\)</span>，若有取<span class="math inline">\(S_b\subset\mathbb{Z}/4b\mathbb{Z}\)</span>,则有$p 4b S_b <span class="math inline">\(,那么\)</span>p_i=k_i(p_1-1)+1 4b S_b<span class="math inline">\(，则如果\)</span>gcd(k_i,b)<span class="math inline">\(，\)</span>p_1 4b k^{-1}_i(S_b-1+k_i)$，因此可知对于每一个质数，该集合中的数均满足强伪证，原式得证。</p>
+<h3 id="漏洞复现">3. 漏洞复现</h3>
+<p>由于我们并不能看到apple的原始基是什么，但我们找到了这个漏洞的复现题目<a target="_blank" rel="noopener" href="https://cryptohack.org/challenges/prejudice/math/">Cryptohack</a></p>
+<p>基本思路就是按照以上定理暴力，依次试出解素数的解，剩下的就是crt构造伪质数。</p>
+<h3 id="题目脚本">4. 题目脚本</h3>
+<p>由于Cryptohack的规矩，题解不能公开，所以仅放部分核心代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> primes:</span><br><span class="line">    f = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> generate_basis(<span class="number">200</span>*p)[<span class="number">1</span>:]:</span><br><span class="line">        <span class="keyword">if</span> legendre(p, i) == i-<span class="number">1</span>:</span><br><span class="line">            f.add(i % (<span class="number">4</span>*p))</span><br><span class="line">    fool.append(<span class="built_in">list</span>(f))</span><br><span class="line">    </span><br><span class="line">fool2 = []</span><br><span class="line"><span class="keyword">for</span> p, f <span class="keyword">in</span> <span class="built_in">enumerate</span>(fool):</span><br><span class="line">    prime = primes[p]</span><br><span class="line">    m = prime*<span class="number">4</span></span><br><span class="line">    cur_set = <span class="built_in">set</span>(f)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span> (<span class="number">1</span>, h):</span><br><span class="line">        new_set = <span class="built_in">set</span>()</span><br><span class="line">        <span class="keyword">for</span> ff <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">if</span> ((ff + ks[i] - <span class="number">1</span>)*inverse(ks[i], m)) % <span class="number">4</span> == <span class="number">3</span>:</span><br><span class="line">                new_set.add(((ff + ks[i] - <span class="number">1</span>)*inverse(ks[i], m)) % m)</span><br><span class="line">        cur_set = cur_set.intersection(new_set)</span><br><span class="line">    fool2.append(cur_set)</span><br></pre></td></tr></table></figure>
+<h2 id="一些感想">9. 一些感想</h2>
+<p>其实写这篇实验报告是因为做到了这个题目，正好遇到这次实验，所以又去深究了一番。</p>
+<p>搜索资料不免会看到余建春，于是想想别人在那么一个非学术甚至非学术友好的环境里做出了为学界所称赞的成就，想起自己在一个如此鼓励学术的环境中占用着那么多资源，却迟迟做不出像样的贡献，浪费着纳税人的钱与师长们的期望，心里总会惴惴。偶尔也想做一些划水的事，或者做一些金玉其外败絮其中的面子事，但总觉得无以面见在天之灵，举头三尺的地方总有大家与大众不可辜负。于是回想起生存道路，走到现在的每一步都离不开其他人的帮助，这条命所得所失都不是我个人的，所以写的东西做的事都不敢懈怠，做，就做到至少让自己挑不动刺，拿出实打实的东西，而不是花拳绣腿重形式轻内容。毕竟，你我逢场作戏随意丢弃的，都有可能是其他人一生求之不得的东西。</p>
+<p>认识一些朋友，很有学密码的灵性，在自己的摸索下走到了我们望尘莫及的地步，我常常想，如果在山大的不是我而是他，有着更好的师资，是不是能做出更大的成就。每每想到这里，就觉得自己还是不能放弃这些难走的路，毕竟人家也曾经理解我认同我支持我，期待着我能做些什么，人不能为了自己那一点前路通畅而无视他人的期望，这一点知遇之恩，来之不易，并非理所当然。</p>
+<h2 id="参考资料">10.参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41545715/article/details/109220168">Fermat素性检测算法（为什么每次概率改变1/2）</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhanghuimeng.github.io/post/the-principles-and-implementation-of-miller-rabin-primality-test/">Miller-Rabin素性检测的原理与实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://exploringnumbertheory.wordpress.com/tag/fermat-witness/">费马见证</a></p>
+<p><a target="_blank" rel="noopener" href="https://cryptohack.org/challenges/prejudice/solutions/">Cryptohack</a></p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/09/17/distributed/">distributed</a></div><div class="post-title fs14"><a href="/2021/10/12/gdqwb2021/">上一篇：gdqwb2021</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <span class="citation" data-cites="Zuni">[@Zuni]</span>(http://example.com/) 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
